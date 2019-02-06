@@ -1,13 +1,17 @@
 import {computed, observable} from 'mobx';
 import {task} from 'mobx-task';
-import {getUserProfile} from '../service';
 
 interface UserProfile {
   name: string;
 }
 
 export class UserProfileStore {
+  apiService;
   @observable userProfile: UserProfile = null;
+
+  constructor({apiService}) {
+    this.apiService = apiService;
+  }
 
   @computed get isFetching() {
     return (
@@ -18,7 +22,7 @@ export class UserProfileStore {
 
   @task.resolved
   async load() {
-    this.userProfile = await getUserProfile();
+    this.userProfile = await this.apiService.getUserProfile();
   }
 
   reset() {

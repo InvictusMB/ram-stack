@@ -1,13 +1,17 @@
 import {computed, observable} from 'mobx';
 import {task} from 'mobx-task';
-import {login, logout} from '../service';
 
 interface Session {
   isLoggedIn: boolean;
 }
 
 export class SessionStore {
+  apiService;
   @observable session: Session;
+
+  constructor({apiService}) {
+    this.apiService = apiService;
+  }
 
   @computed get isFetching() {
     return (
@@ -20,11 +24,11 @@ export class SessionStore {
 
   @task.resolved
   async login(credentials) {
-    this.session = await login(credentials);
+    this.session = await this.apiService.login(credentials);
   }
 
   @task.resolved
   async logout() {
-    this.session = await logout();
+    this.session = await this.apiService.logout();
   }
 }

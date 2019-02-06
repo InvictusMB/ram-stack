@@ -27,8 +27,14 @@ const rules = {
     getContainerRegistration: ({moduleName, filePath, references: r}) =>
       `${_.lowerFirst(moduleName)}: ${r.awilix}.asClass(require('./${filePath}').${moduleName}).singleton()`,
   },
+  'Services': {
+    ext: '.service.ts',
+    getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'Service',
+    getContainerRegistration: ({moduleName, filePath, references: r}) =>
+      `${_.lowerFirst(moduleName)}: ${r.awilix}.asClass(require('./${filePath}').${moduleName}).singleton()`,
+  },
   'Module': {
-    ref: ['Views', 'Components', 'Stores', 'Pages']
+    ref: ['Views', 'Components', 'Stores', 'Services', 'Pages']
   }
 };
 

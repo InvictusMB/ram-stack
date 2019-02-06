@@ -24,3 +24,9 @@ function delay<T>(value: T = null, ms = 1000) {
     setTimeout(() => resolve(value), ms);
   });
 }
+
+export class ApiService {
+  getUserProfile = getUserProfile;
+  login = login;
+  logout = logout;
+}
