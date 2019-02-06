@@ -4,16 +4,16 @@ import {Component, createElement} from 'react';
 import {container} from './di';
 
 export function withContainer(component) {
-  let displayName =
-    'inject-' +
-    (component.displayName ||
-      component.name ||
-      (component.constructor && component.constructor.name) ||
-      'Unknown');
-  displayName += '-with-DI-container';
+
+  const componentName = (
+    component.displayName
+    || component.name
+    || (component.constructor && component.constructor.name)
+    || 'Unknown'
+  );
 
   class Injector extends Component {
-    static displayName = displayName;
+    static displayName = `inject-${componentName}-with-DI-container`;
     static wrappedComponent;
     wrappedInstance;
 
@@ -22,7 +22,8 @@ export function withContainer(component) {
     };
 
     render() {
-      const newProps: any = {...resolveContainer(container), ...this.props};
+      const Shell = resolveContainer(container);
+      const newProps: any = {...Shell, Shell, ...this.props};
 
       if (!isStateless(component)) {
         newProps.ref = this.storeRef;

@@ -1,4 +1,6 @@
 import * as awilix from 'awilix';
+import {observer} from 'mobx-react';
+
 import {container} from '../di';
 import {withContainer} from '../withContainer';
 
@@ -7,7 +9,7 @@ import {ProfilePage} from './profile.page';
 import {SessionStore} from './session';
 
 container.register({
-  ProfilePage: awilix.asValue(withContainer(ProfilePage)),
+  ProfilePage: awilix.asValue(withContainer(observer(ProfilePage))),
   sessionStore: awilix.asClass(SessionStore).singleton(),
   userProfileStore: awilix.asClass(UserProfileStore).singleton(),
 });
