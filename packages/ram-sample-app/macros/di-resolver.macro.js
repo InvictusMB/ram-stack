@@ -27,16 +27,14 @@ function removeReference(referencePath) {
 }
 
 function resolveReference(cwd, babel, rule, referencePath) {
-  const [container, root] = referencePath.parentPath.get('arguments');
-  const containerName = container.node.name;
-  const rootPath = root.node.value;
-  console.log('container:', containerName);
-  console.log('root:', rootPath);
+  const [referencesAst, rootPathAst] = referencePath.parentPath.get('arguments');
+  const references = getReferences(referencesAst);
+  const rootPath = rootPathAst.node.value;
 
-  const registrations = getRegistrations(cwd, rule, rootPath);
+  const registrations = getRegistrations(cwd, rule, references, rootPath);
   if (registrations.length) {
     const replacement = babel.template(
-      containerRegistationTemplate({containerName, registrations}),
+      containerRegistationTemplate({references, registrations}),
     )();
     referencePath.parentPath.parentPath.replaceWithMultiple(replacement);
   } else {
@@ -44,15 +42,21 @@ function resolveReference(cwd, babel, rule, referencePath) {
   }
 }
 
-const containerRegistationTemplate = ({containerName, registrations}) => `
-${containerName}.register({
+function getReferences(objectExpression) {
+  return _.fromPairs(
+    _.map(objectExpression.node.properties, property => [property.key.name, property.value.name]),
+  );
+}
+
+const containerRegistationTemplate = ({references, registrations}) => `
+${references.container}.register({
   ${registrations.join(',\n')}
 });
 `;
 
-function getRegistrations(cwd, rule, rootPath) {
+function getRegistrations(cwd, rule, references, rootPath) {
   if (rule.ref) {
-    return _.flatMap(rule.ref, ref => getRegistrations(cwd, rules[ref], rootPath))
+    return _.flatMap(rule.ref, ref => getRegistrations(cwd, rules[ref], references, rootPath));
   }
 
   const {ext} = rule;
@@ -62,6 +66,6 @@ function getRegistrations(cwd, rule, rootPath) {
     .map(filePath => filePath.replace(/\\/g, '/'))
     .map(filePath => {
       const moduleName = rule.getName({filePath, ext});
-      return rule.getContainerRegistration({moduleName, filePath});
+      return rule.getContainerRegistration({references, moduleName, filePath});
     });
 }

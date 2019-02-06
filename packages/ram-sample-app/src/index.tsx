@@ -1,17 +1,19 @@
+import * as awilix from 'awilix';
+import {observer} from 'mobx-react';
 import React from 'react';
 import {render} from 'react-dom';
 // @ts-ignore
 import {registerModule} from '../macros/di-resolver.macro';
-
-import {container, Shell} from './di';
+import {withContainer} from './withContainer';
 
 import './style.css';
 
-// TODO: Pass withContainer to resolver
-import {withContainer} from './withContainer';
-// tslint:disable-next-line
-+withContainer;
+export const container = awilix.createContainer({
+  injectionMode: awilix.InjectionMode.PROXY,
+});
 
-registerModule(container, '.');
+registerModule({container, withContainer, awilix, observer}, '.');
 
-render(<Shell.AppView />, document.getElementById('root'));
+const AppView = container.resolve('AppView') as any;
+
+render(<AppView />, document.getElementById('root'));

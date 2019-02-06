@@ -1,9 +1,7 @@
 import hoistStatics from 'hoist-non-react-statics';
 import {Component, createElement} from 'react';
 
-import {container} from './di';
-
-export function withContainer(component) {
+export function withContainer(container, component) {
 
   const componentName = (
     component.displayName

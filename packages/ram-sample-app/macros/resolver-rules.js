@@ -6,26 +6,26 @@ const rules = {
   'Views': {
     ext: '.view.tsx',
     getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'View',
-    getContainerRegistration: ({moduleName, filePath}) =>
-      `${moduleName}: require('awilix').asValue(withContainer(require('mobx-react').observer(require('./${filePath}').${moduleName})))`,
+    getContainerRegistration: ({moduleName, filePath, references: r}) =>
+      `${moduleName}: ${r.awilix}.asValue(${r.withContainer}(${r.container}, ${r.observer}(require('./${filePath}').${moduleName})))`,
   },
   'Components': {
     ext: '.component.tsx',
     getName: ({filePath, ext}) => pascalCase(filePath, ext),
-    getContainerRegistration: ({moduleName, filePath}) =>
-      `${moduleName}: require('awilix').asValue(withContainer(require('./${filePath}').${moduleName}))`,
+    getContainerRegistration: ({moduleName, filePath, references: r}) =>
+      `${moduleName}: ${r.awilix}.asValue(${r.withContainer}(${r.container}, require('./${filePath}').${moduleName}))`,
   },
   'Pages': {
     ext: '.page.tsx',
     getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'Page',
-    getContainerRegistration: ({moduleName, filePath}) =>
-      `${moduleName}: require('awilix').asValue(withContainer(require('mobx-react').observer(require('./${filePath}').${moduleName})))`,
+    getContainerRegistration: ({moduleName, filePath, references: r}) =>
+      `${moduleName}: ${r.awilix}.asValue(${r.withContainer}(${r.container}, ${r.observer}(require('./${filePath}').${moduleName})))`,
   },
   'Stores': {
     ext: '.store.ts',
     getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'Store',
-    getContainerRegistration: ({moduleName, filePath}) =>
-      `${_.lowerFirst(moduleName)}: require('awilix').asClass(require('./${filePath}').${moduleName}).singleton()`,
+    getContainerRegistration: ({moduleName, filePath, references: r}) =>
+      `${_.lowerFirst(moduleName)}: ${r.awilix}.asClass(require('./${filePath}').${moduleName}).singleton()`,
   },
   'Module': {
     ref: ['Views', 'Components', 'Stores', 'Pages']
