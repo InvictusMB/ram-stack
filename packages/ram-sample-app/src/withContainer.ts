@@ -1,6 +1,10 @@
 import hoistStatics from 'hoist-non-react-statics';
 import {Component, createElement} from 'react';
 
+export function createInjector(container) {
+  return (component) => withContainer(container, component);
+}
+
 export function withContainer(container, component) {
 
   const componentName = (

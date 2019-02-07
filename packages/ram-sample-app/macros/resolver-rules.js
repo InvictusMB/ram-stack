@@ -1,45 +1,94 @@
 //@ts-ignore
-const _ = require('lodash');
-const path = require('path');
 
-const rules = {
-  'Views': {
-    ext: '.view.tsx',
-    getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'View',
-    getContainerRegistration: ({moduleName, filePath, references: r}) =>
-      `${moduleName}: ${r.awilix}.asValue(${r.withContainer}(${r.container}, ${r.observer}(require('./${filePath}').${moduleName})))`,
+module.exports = {
+  compositionRoots: {
+    container: {
+      template: '<%= root %>.register({<%= registrations %>});',
+    },
   },
-  'Components': {
-    ext: '.component.tsx',
-    getName: ({filePath, ext}) => pascalCase(filePath, ext),
-    getContainerRegistration: ({moduleName, filePath, references: r}) =>
-      `${moduleName}: ${r.awilix}.asValue(${r.withContainer}(${r.container}, require('./${filePath}').${moduleName}))`,
+  rules: {
+    'Views': {
+      ext: '.view.tsx',
+      registrations: {
+        container: {
+          registrationNaming: {
+            casing: 'pascal',
+            suffix: 'View',
+          },
+          identifierNaming: {
+            casing: 'pascal',
+            suffix: 'View',
+          },
+          decorators: ['observer', 'withContainer', 'asValue'],
+        },
+      },
+    },
+    'Components': {
+      ext: '.component.tsx',
+      registrations: {
+        container: {
+          registrationNaming: {
+            casing: 'pascal',
+          },
+          identifierNaming: {
+            casing: 'pascal',
+          },
+          decorators: ['withContainer', 'asValue'],
+        },
+      },
+    },
+    'Pages': {
+      ext: '.page.tsx',
+      registrations: {
+        container: {
+          registrationNaming: {
+            casing: 'pascal',
+            suffix: 'Page',
+          },
+          identifierNaming: {
+            casing: 'pascal',
+            suffix: 'Page',
+          },
+          decorators: ['observer', 'withContainer', 'asValue'],
+        },
+      },
+    },
+    'Stores': {
+      ext: '.store.ts',
+      registrations: {
+        container: {
+          registrationNaming: {
+            casing: 'camel',
+            suffix: 'Store',
+          },
+          identifierNaming: {
+            casing: 'pascal',
+            suffix: 'Store',
+          },
+          decorators: ['asClass'],
+          modifiers: ['singleton'],
+        },
+      },
+    },
+    'Services': {
+      ext: '.service.ts',
+      registrations: {
+        container: {
+          registrationNaming: {
+            casing: 'camel',
+            suffix: 'Service',
+          },
+          identifierNaming: {
+            casing: 'pascal',
+            suffix: 'Service',
+          },
+          decorators: ['asClass'],
+          modifiers: ['singleton'],
+        },
+      },
+    },
+    'Module': {
+      compose: ['Views', 'Components', 'Stores', 'Services', 'Pages'],
+    },
   },
-  'Pages': {
-    ext: '.page.tsx',
-    getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'Page',
-    getContainerRegistration: ({moduleName, filePath, references: r}) =>
-      `${moduleName}: ${r.awilix}.asValue(${r.withContainer}(${r.container}, ${r.observer}(require('./${filePath}').${moduleName})))`,
-  },
-  'Stores': {
-    ext: '.store.ts',
-    getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'Store',
-    getContainerRegistration: ({moduleName, filePath, references: r}) =>
-      `${_.lowerFirst(moduleName)}: ${r.awilix}.asClass(require('./${filePath}').${moduleName}).singleton()`,
-  },
-  'Services': {
-    ext: '.service.ts',
-    getName: ({filePath, ext}) => pascalCase(filePath, ext) + 'Service',
-    getContainerRegistration: ({moduleName, filePath, references: r}) =>
-      `${_.lowerFirst(moduleName)}: ${r.awilix}.asClass(require('./${filePath}').${moduleName}).singleton()`,
-  },
-  'Module': {
-    ref: ['Views', 'Components', 'Stores', 'Services', 'Pages']
-  }
 };
-
-function pascalCase(filePath, ext) {
-  return _.upperFirst(_.camelCase(path.basename(filePath, ext)))
-}
-
-module.exports = rules;
