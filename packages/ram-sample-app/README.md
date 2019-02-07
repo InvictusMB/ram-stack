@@ -7,71 +7,120 @@ Autowiring the routing is a next step.
 
 Application composition root is generated automatically at (babel) build time.
 
-`macros/resolver-rules.js` defines the conventions for autowiring.
+`macros/composition-config.js` defines the conventions for autowiring.
 
 Rules describe patterns for picking the files and extracting things to be injected into the container.
 
 Each rule defines:
 * a file extension to look for
-* a pattern for deriving an export name
-* a registration template
+* one or more `container registration` definitions
 
-Autowiring is kickstarted with `registerRULENAME` macro.
+Each `container registration` defines:
+* a naming convention for deriving an export name
+* a naming convention for deriving a registration name within container
+* a list of decorators to be applied to the exported value before registration
+* a list of modifiers chained to the expression
 
-For example, the following code will evalute `Stores` rule in `./user` directory and register all the stores it finds in the `container`: 
+Autowiring is kickstarted with invoking `registerRULENAME` macro.
+
+For example:
+Given `./user` directory that contains `session.store.ts` and `userProfile.store.ts` the following code will evaluate `Stores` rule and register all the stores it finds in `./user` directory with `myContainer`: 
 ```javascript
-import * as awilix from 'awilix';
-import {registerStores} from '../macros/di-resolver.macro';
-const container = awilix.createContainer({
-  injectionMode: awilix.InjectionMode.PROXY,
+import {createContainer, InjectionMode, asClass} from 'awilix';
+import {registerStores} from '../macros/composition-root.macro';
+const myContainer = createContainer({
+  injectionMode: InjectionMode.PROXY,
 });
-registerStores({container, awilix}, './user');
+
+registerStores({myContainer, asClass}, './user');
 ```
-`container` and `awilix` are the references that will be accessible to the defined rule. It is expected that they are defined in the scope where macro is used.
-
-A rule definition might look like this:
+      ↓ ↓ ↓ ↓ ↓ ↓
+           
 ```javascript
-const _ = require('lodash');
-const path = require('path');
+import {createContainer, InjectionMode, asClass} from 'awilix';
+import {registerStores} from '../macros/composition-root.macro';
+const myContainer = createContainer({
+  injectionMode: InjectionMode.PROXY,
+});
 
-const rules = {
-  'Stores': {
-    ext: '.store.ts',
-    getName: ({filePath, ext}) => _.upperFirst(_.camelCase(path.basename(filePath, ext))) + 'Store',
-    getContainerRegistration: ({moduleName, filePath, references: r}) =>
-      `${_.lowerFirst(moduleName)}: ${r.awilix}.asClass(require('./${filePath}').${moduleName}).singleton()`,
-  }
-};
-
-module.exports = rules;
-```
-
-`filePath` and `ext`(file extension) are provided to define a naming convention and infer `moduleName`.
-
-`moduleName` and `filePath` are then provided to the rule to generate the wiring code.
-
-Given `./user` directory that contains `session.store.ts` and `userProfile.store.ts`, `registerStores({container, awilix}, './user')` macro will expand into:
-
-```javascript
-container.register({
- sessionStore: awilix.asClass(require('./app/session.store.ts').sessionStore).singleton(),
- userStore: awilix.asClass(require('./app/user.store.ts').userStore).singleton()
+myContainer.register({
+ sessionStore: asClass(require('./app/session.store.ts').SessionStore).singleton(),
+ userStore: asClass(require('./app/user.store.ts').UserStore).singleton()
 });
 ```
 
-Rules can compose other rules using `ref`:
-```
-const rules = {
-  'Stores': { /* ... */ },
-  'Views': { /* ... */ },
-  'Module': {
-    ref: ['Stores', 'Views']
+Composition config to produce such output might look like this:
+
+```javascript
+module.exports = {
+  compositionRoots: {
+    'myContainer.template': '<%= root %>.register({<%= registrations %>});',
+  },
+  rules: {
+    'Stores': {
+      ext: '.store.ts',
+      'registrations.myContainer': {
+        'naming.registration.casing': 'camel',
+        'naming.registration.suffix': 'Store',
+        'naming.identifier.casing': 'pascal',
+        'naming.identifier.suffix': 'Store',
+        decorators: ['asClass'],
+        modifiers: ['singleton'],
+      },
+    },
   }
 };
 ```
-`registerModule({container, awilix}, './user')` will wire both stores and views in `./app` directory now.
 
-Macros that do not match a rule will be removed from output.
+Each rule might produce one or more registrations.
+In this example `registrations.myContainer` means the rule will produce a registration for composition root `myContainer`.
+There has to be a corresponding template defined for `myContainer` in `compositionRoots` section.
+
+`myContainer` and `asClass` are expected to be defined in the where this macro is used.
+
+Rules can compose other rules using `compose` keyword:
+```javascript
+module.exports = {
+  // ...
+  rules: {
+    'Stores': { /* ... */ },
+    'Views': { /* ... */ },
+    'Module': {
+      compose: ['Stores', 'Views']
+    }
+  }
+};
+```
+`registerModule({container, asClass, asValue}, './user')` will wire both stores and views in `./app` directory now.
+
+Rules can extend other rules using `extends` keyword:
+```javascript
+module.exports = {
+  // ...
+  rules: {
+    'Classes': {
+      'registrations.container': {
+        'naming.registration.casing': 'camel',
+        'naming.identifier.casing': 'pascal',
+        decorators: ['asClass'],
+        modifiers: ['singleton'],
+      },
+    },
+    'Stores': {
+      extends: 'Classes',
+      ext: '.store.ts',
+      'registrations.container': {
+        'naming.registration.suffix': 'Store',
+        'naming.identifier.suffix': 'Store',
+      },
+    },
+  }
+};
+```
+
+Macros that do not match any rule will be removed from output.
+
+Macros can also be marked with `isAbstract` flag to indicate that they should not be used directly.
 
 Design goals:
 * Relative imports should not be needed
@@ -80,6 +129,8 @@ Design goals:
 * Naming conventions should remain adjustable
 
 TODO:
+* Validate references passed to the macro to match the decorators and containers used in code
+* Pass config route to the macro
+* YAML for configuration?
 * Also wire routing in the application composition root
-* Refactor rules into plain JSON without JS code inside to enforce JSON schema
 * Generate TS top level `.d.ts` file with all the things in container to help TypeScript without resorting back to relative path imports again
