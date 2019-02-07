@@ -8,8 +8,8 @@ module.exports = {
     'Classes': {
       isAbstract: true,
       'registrations.container': {
-        'registrationNaming.casing': 'camel',
-        'identifierNaming.casing': 'pascal',
+        'naming.registration.casing': 'camel',
+        'naming.identifier.casing': 'pascal',
         decorators: ['asClass'],
         modifiers: ['singleton'],
       },
@@ -17,8 +17,8 @@ module.exports = {
     'Components': {
       ext: '.component.tsx',
       'registrations.container': {
-        'registrationNaming.casing': 'pascal',
-        'identifierNaming.casing': 'pascal',
+        'naming.registration.casing': 'pascal',
+        'naming.identifier.casing': 'pascal',
         decorators: ['withContainer', 'asValue'],
       },
     },
@@ -26,8 +26,8 @@ module.exports = {
       extends: 'Components',
       ext: '.view.tsx',
       'registrations.container': {
-        'registrationNaming.suffix': 'View',
-        'identifierNaming.suffix': 'View',
+        'naming.registration.suffix': 'View',
+        'naming.identifier.suffix': 'View',
         decorators: ['observer', 'withContainer', 'asValue'],
       },
     },
@@ -35,24 +35,24 @@ module.exports = {
       extends: 'Views',
       ext: '.page.tsx',
       'registrations.container': {
-        'registrationNaming.suffix': 'Page',
-        'identifierNaming.suffix': 'Page',
+        'naming.registration.suffix': 'Page',
+        'naming.identifier.suffix': 'Page',
       },
     },
     'Stores': {
       extends: 'Classes',
       ext: '.store.ts',
       'registrations.container': {
-        'registrationNaming.suffix': 'Store',
-        'identifierNaming.suffix': 'Store',
+        'naming.registration.suffix': 'Store',
+        'naming.identifier.suffix': 'Store',
       },
     },
     'Services': {
       extends: 'Classes',
       ext: '.service.ts',
       'registrations.container': {
-        'registrationNaming.suffix': 'Service',
-        'identifierNaming.suffix': 'Service',
+        'naming.registration.suffix': 'Service',
+        'naming.identifier.suffix': 'Service',
       },
     },
     'Module': {

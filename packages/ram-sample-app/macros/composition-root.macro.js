@@ -116,8 +116,7 @@ function getRegistrations(cwd, rule, references, rootPath) {
 
 function getCompositionRootRegistrations(cwd, ext, compositionRootRule, references, rootPath) {
   const {
-    registrationNaming,
-    identifierNaming,
+    naming,
     decorators = [],
     modifiers = [],
   } = compositionRootRule;
@@ -127,8 +126,7 @@ function getCompositionRootRegistrations(cwd, ext, compositionRootRule, referenc
     .map(filePath => path.relative(cwd, filePath))
     .map(filePath => filePath.replace(/\\/g, '/'))
     .map(filePath => {
-      const identifier = applyNamingRule(identifierNaming, filePath, ext);
-      const registration = applyNamingRule(registrationNaming, filePath, ext);
+      const {identifier, registration} = getNames(naming, filePath, ext);
       let expression = `require('./${filePath}').${identifier}`;
       expression = _.reduce(decorators,
         (acc, decorator) => applyDecorator(decorator, acc), expression,
@@ -141,13 +139,23 @@ function getCompositionRootRegistrations(cwd, ext, compositionRootRule, referenc
     });
 }
 
-function applyNamingRule(namingRule, filePath, ext) {
+function getNames(namingRules, filePath, ext) {
+  return _.chain(namingRules)
+    .defaults({
+      identifier: {},
+      registration: {}
+    })
+    .mapValues(rule => applyNamingRule(rule, filePath, ext))
+    .value();
+}
+
+function applyNamingRule(namingRule = {}, filePath, ext) {
   const casingFunctions = {
     pascal: id => _.upperFirst(_.camelCase(id)),
     camel: _.camelCase,
     snake: _.snakeCase,
   };
-  const {casing, prefix, suffix} = namingRule;
+  const {casing = 'pascal', prefix, suffix} = namingRule;
   const id = path.basename(filePath, ext);
   return [prefix, casingFunctions[casing](id), suffix].join('');
 }
