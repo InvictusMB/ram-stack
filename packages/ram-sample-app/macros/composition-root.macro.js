@@ -3,12 +3,14 @@ const {createMacro} = require('babel-plugin-macros');
 const path = require('path');
 const glob = require('glob');
 const _ = require('lodash');
+const dot = require('dot-object');
 
-const {rules, compositionRoots} = require('./resolver-rules');
+const config = require('./composition-config');
+const {rules, compositionRoots} = parseConfig(config);
 
-module.exports = createMacro(diResolverMacro);
+module.exports = createMacro(compositionRootMacro);
 
-function diResolverMacro({references, state, babel}) {
+function compositionRootMacro({references, state, babel}) {
   const {file: {opts: {filename}}} = state;
   const cwd = path.dirname(filename);
 
@@ -20,6 +22,33 @@ function diResolverMacro({references, state, babel}) {
     }
     reference.forEach(referencePath => resolveReference(cwd, babel, rule, referencePath));
   });
+}
+
+function parseConfig(config) {
+  const {rules, compositionRoots} = dot.object(dot.dot(config));
+  return {
+    rules: preprocessRules(rules),
+    compositionRoots
+  }
+}
+
+function preprocessRules(rules) {
+  return _.chain(rules)
+    .pickBy(rule => !rule.isAbstract)
+    .mapValues(rule => {
+      while (rule.extends) {
+        rule = extendRule(rule, rules[rule.extends]);
+      }
+      return rule;
+    })
+    .value();
+}
+
+function extendRule(rule, parent) {
+  return _.merge({},
+    _.omit(parent, 'isAbstract'),
+    _.omit(rule, 'extends')
+  );
 }
 
 function resolveReference(cwd, babel, rule, referencePath) {

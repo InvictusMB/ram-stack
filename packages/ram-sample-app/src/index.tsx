@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import React from 'react';
 import {render} from 'react-dom';
 // @ts-ignore
-import {registerModule} from '../macros/di-resolver.macro';
+import {registerModule} from '../macros/composition-root.macro';
 import {createInjector} from './withContainer';
 
 import './style.css';
