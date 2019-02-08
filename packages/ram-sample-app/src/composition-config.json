@@ -1,0 +1,60 @@
+{
+  "compositionRoots": {
+    "container.template": "<%= root %>.register({<%= registrations %>});"
+  },
+  "rules": {
+    "Classes": {
+      "isAbstract": true,
+      "registrations.container": {
+        "naming.registration.casing": "camel",
+        "naming.identifier.casing": "pascal",
+        "decorators": ["asClass"],
+        "modifiers": ["singleton"]
+      }
+    },
+    "Components": {
+      "ext": ".component.tsx",
+      "registrations.container": {
+        "naming.registration.casing": "pascal",
+        "naming.identifier.casing": "pascal",
+        "decorators": ["withContainer", "asValue"]
+      }
+    },
+    "Views": {
+      "extends": "Components",
+      "ext": ".view.tsx",
+      "registrations.container": {
+        "naming.registration.suffix": "View",
+        "naming.identifier.suffix": "View",
+        "decorators": ["observer", "withContainer", "asValue"]
+      }
+    },
+    "Pages": {
+      "extends": "Views",
+      "ext": ".page.tsx",
+      "registrations.container": {
+        "naming.registration.suffix": "Page",
+        "naming.identifier.suffix": "Page"
+      }
+    },
+    "Stores": {
+      "extends": "Classes",
+      "ext": ".store.ts",
+      "registrations.container": {
+        "naming.registration.suffix": "Store",
+        "naming.identifier.suffix": "Store"
+      }
+    },
+    "Services": {
+      "extends": "Classes",
+      "ext": ".service.ts",
+      "registrations.container": {
+        "naming.registration.suffix": "Service",
+        "naming.identifier.suffix": "Service"
+      }
+    },
+    "Module": {
+      "compose": ["Components", "Views", "Pages", "Stores", "Services"]
+    }
+  }
+}

@@ -127,10 +127,14 @@ Design goals:
 * Components should be as framework agnostic as possible
 * Wiring rules should remain DI framework independent. Awilix is used as the least obtrusive DI container out there
 * Naming conventions should remain adjustable
+* Semantic part of the configuration should be easily parsable by external tools to facilitate static analysis.
+Meaning that it should be trivial to infer from rule X that thing Y ends up in the container Z.
+And therefore all the files affected by rule X have access to all the other things within container Z.  
 
 TODO:
 * Validate references passed to the macro to match the decorators and containers used in code
-* Pass config route to the macro
+* Error out on undefined identifiers referenced from composition config 
+* Improve error reporting when no files match rule
 * YAML for configuration?
 * Also wire routing in the application composition root
 * Generate TS top level `.d.ts` file with all the things in container to help TypeScript without resorting back to relative path imports again
