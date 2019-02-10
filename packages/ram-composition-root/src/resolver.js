@@ -1,4 +1,3 @@
-//@ts-ignore
 const _ = require('lodash');
 
 const {processRule} = require('./rule-engine');

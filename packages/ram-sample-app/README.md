@@ -7,7 +7,7 @@ Autowiring the routing is a next step.
 
 Application composition root is generated automatically at (babel) build time.
 
-`macros/composition-config.js` defines the conventions for autowiring.
+[`composition-config.json`](./src/composition-config.json) defines the conventions for autowiring.
 
 Rules describe patterns for picking the files and extracting things to be injected into the container.
 

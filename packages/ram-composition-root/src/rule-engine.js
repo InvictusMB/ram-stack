@@ -1,4 +1,3 @@
-//@ts-ignore
 const _ = require('lodash');
 const glob = require('glob');
 const path = require('path');

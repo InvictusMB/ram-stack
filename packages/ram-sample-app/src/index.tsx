@@ -1,10 +1,9 @@
+import {registerModule} from '@ram-stack/composition-root/macro';
 import * as awilix from 'awilix';
 import {asClass, asValue} from 'awilix';
 import {observer} from 'mobx-react';
 import React from 'react';
 import {render} from 'react-dom';
-// @ts-ignore
-import {registerModule} from '../macros/composition-root.macro';
 import {createInjector} from './withContainer';
 
 import './style.css';

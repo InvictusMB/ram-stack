@@ -1,0 +1,40 @@
+{
+  "name": "@ram-stack/composition-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Babel macro to define application composition root",
+  "main": "./dist",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "cpr ./src ./dist -d"
+  },
+  "dependencies": {
+    "dot-object": "^1.7.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "babel-plugin-macros": "^2.4.5",
+    "cpr": "^3.0.1",
+    "glob": "^7.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InvictusMB/ram-stack.git",
+    "directory": "packages/ram-composition-root"
+  },
+  "keywords": [
+    "ram-stack",
+    "autowiring",
+    "dependency-injection",
+    "di",
+    "composition",
+    "composition-root",
+    "architecture"
+  ],
+  "author": "InvictusMB <invictusmb@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InvictusMB/ram-stack/issues"
+  },
+  "homepage": "https://github.com/InvictusMB/ram-stack/packages/ram-composition-root#readme"
+}

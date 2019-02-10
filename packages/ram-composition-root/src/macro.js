@@ -1,4 +1,3 @@
-//@ts-ignore
 const _ = require('lodash');
 const path = require('path');
 const {createMacro} = require('babel-plugin-macros');
@@ -6,9 +5,9 @@ const {createMacro} = require('babel-plugin-macros');
 const {loadConfig} = require('./config-loader');
 const {resolveContext} = require('./resolver');
 
-module.exports = createMacro(compositionRootMacro);
+module.exports = createMacro(macro);
 
-function compositionRootMacro({references, state, babel}) {
+function macro({references, state, babel}) {
   const {file: {opts: {filename}}} = state;
   const cwd = path.dirname(filename);
 

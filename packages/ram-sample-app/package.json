@@ -1,7 +1,8 @@
 {
-  "name": "react-awilix-mobx",
+  "name": "@ram-stack/sample-app",
   "version": "0.0.0",
   "private": true,
+  "author": "InvictusMB <invictusmb@gmail.com>",
   "dependencies": {
     "awilix": "^4.2.0",
     "hoist-non-react-statics": "^3.3.0",
@@ -19,14 +20,12 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@ram-stack/composition-root": "^1.0.0",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.120",
     "@types/node": "^10.12.21",
     "@types/react": "^16.8.1",
     "@types/react-dom": "^16.0.11",
-    "babel-plugin-macros": "^2.4.5",
-    "dot-object": "^1.7.1",
-    "glob": "^7.1.3",
     "react-scripts": "^2.1.3",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1"
