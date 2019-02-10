@@ -4,12 +4,9 @@
   "private": true,
   "author": "InvictusMB <invictusmb@gmail.com>",
   "dependencies": {
-    "awilix": "^4.2.0",
+    "@ram-stack/core": "^1.0.0",
     "hoist-non-react-statics": "^3.3.0",
     "lodash": "^4.17.11",
-    "mobx": "^5.9.0",
-    "mobx-react": "^5.4.3",
-    "mobx-task": "^1.0.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },

@@ -1,5 +1,4 @@
-import {computed, observable} from 'mobx';
-import {task} from 'mobx-task';
+import {computed, observable, task} from '@ram-stack/core';
 
 interface UserProfile {
   name: string;
@@ -9,20 +8,18 @@ export class UserProfileStore {
   apiService;
   @observable userProfile: UserProfile = null;
 
+  load = task(async () => {
+    this.userProfile = await this.apiService.getUserProfile();
+  });
+
   constructor({apiService}) {
     this.apiService = apiService;
   }
 
   @computed get isFetching() {
     return (
-      // @ts-ignore
       this.load.pending
     );
-  }
-
-  @task.resolved
-  async load() {
-    this.userProfile = await this.apiService.getUserProfile();
   }
 
   reset() {

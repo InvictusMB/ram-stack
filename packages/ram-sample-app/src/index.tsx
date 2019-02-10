@@ -1,16 +1,12 @@
 import {registerModule} from '@ram-stack/composition-root/macro';
-import * as awilix from 'awilix';
-import {asClass, asValue} from 'awilix';
-import {observer} from 'mobx-react';
+import {asClass, asValue, createContainer, observer} from '@ram-stack/core';
 import React from 'react';
 import {render} from 'react-dom';
 import {createInjector} from './withContainer';
 
 import './style.css';
 
-export const container = awilix.createContainer({
-  injectionMode: awilix.InjectionMode.PROXY,
-});
+const container = createContainer();
 
 const withContainer = createInjector(container);
 

@@ -1,0 +1,34 @@
+{
+  "name": "@ram-stack/core",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React Awilix MobX app core dependencies",
+  "main": "./dist",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InvictusMB/ram-stack.git",
+    "directory": "packages/ram-core"
+  },
+  "keywords": [
+    "ram"
+  ],
+  "author": "InvictusMB <invictusmb@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InvictusMB/ram-stack/issues"
+  },
+  "homepage": "https://github.com/InvictusMB/ram-stack/packages/ram-core#readme",
+  "devDependencies": {
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "awilix": "^4.2.0",
+    "mobx": "^5.9.0",
+    "mobx-react": "^5.4.3",
+    "mobx-task": "^1.0.1"
+  }
+}

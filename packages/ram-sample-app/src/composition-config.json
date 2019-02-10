@@ -8,8 +8,12 @@
       "registrations.container": {
         "naming.registration.casing": "camel",
         "naming.identifier.casing": "pascal",
-        "decorators": ["asClass"],
-        "modifiers": ["singleton"]
+        "decorators": [
+          "asClass"
+        ],
+        "modifiers": [
+          "singleton"
+        ]
       }
     },
     "Components": {
@@ -17,7 +21,10 @@
       "registrations.container": {
         "naming.registration.casing": "pascal",
         "naming.identifier.casing": "pascal",
-        "decorators": ["withContainer", "asValue"]
+        "decorators": [
+          "withContainer",
+          "asValue"
+        ]
       }
     },
     "Views": {
@@ -26,7 +33,11 @@
       "registrations.container": {
         "naming.registration.suffix": "View",
         "naming.identifier.suffix": "View",
-        "decorators": ["observer", "withContainer", "asValue"]
+        "decorators": [
+          "observer",
+          "withContainer",
+          "asValue"
+        ]
       }
     },
     "Pages": {
@@ -54,7 +65,13 @@
       }
     },
     "Module": {
-      "compose": ["Components", "Views", "Pages", "Stores", "Services"]
+      "compose": [
+        "Components",
+        "Views",
+        "Pages",
+        "Stores",
+        "Services"
+      ]
     }
   }
 }

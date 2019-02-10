@@ -1,10 +1,19 @@
-import {computed, observable} from 'mobx';
-import {task} from 'mobx-task';
+import {computed, task} from '@ram-stack/core';
 import {SessionStore, UserProfileStore} from '../user';
 
 export class AppStore {
-  @observable userProfileStore: UserProfileStore;
-  @observable sessionStore: SessionStore;
+  userProfileStore: UserProfileStore;
+  sessionStore: SessionStore;
+
+  login = task(async (credentials: any) => {
+    await this.sessionStore.login(credentials);
+    await this.userProfileStore.load();
+  });
+
+  logout = task.resolved(async () => {
+    await this.sessionStore.logout();
+    await this.userProfileStore.reset();
+  });
 
   constructor({sessionStore, userProfileStore}) {
     this.userProfileStore = userProfileStore;
@@ -16,17 +25,5 @@ export class AppStore {
       this.sessionStore.isFetching
       || this.userProfileStore.isFetching
     );
-  }
-
-  @task.resolved
-  async login(credentials) {
-    await this.sessionStore.login(credentials);
-    await this.userProfileStore.load();
-  }
-
-  @task.resolved
-  async logout() {
-    await this.sessionStore.logout();
-    await this.userProfileStore.reset();
   }
 }
