@@ -1,8 +1,8 @@
+import {PickInjectedDependencies} from '@ram-stack/context';
 import {toJS} from '@ram-stack/core';
 import React from 'react';
 
-export function AppStateView(props: {appStore}) {
-  const {appStore} = props;
+export function AppStateView({appStore}: AppStateViewProps) {
   return (
     <div>
       <pre>AppStore: {JSON.stringify(toJS(appStore), null, 2)}</pre>
@@ -12,3 +12,5 @@ export function AppStateView(props: {appStore}) {
     </div>
   );
 }
+
+type AppStateViewProps = PickInjectedDependencies<'appStore'>;

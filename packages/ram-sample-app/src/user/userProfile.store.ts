@@ -1,3 +1,4 @@
+import {PickInjectedDependencies} from '@ram-stack/context';
 import {computed, observable, task} from '@ram-stack/core';
 
 interface UserProfile {
@@ -5,14 +6,14 @@ interface UserProfile {
 }
 
 export class UserProfileStore {
-  apiService;
+  apiService: UserProfileStoreDependencies['apiService'];
   @observable userProfile: UserProfile = null;
 
   load = task(async () => {
     this.userProfile = await this.apiService.getUserProfile();
   });
 
-  constructor({apiService}) {
+  constructor({apiService}: UserProfileStoreDependencies) {
     this.apiService = apiService;
   }
 
@@ -26,3 +27,5 @@ export class UserProfileStore {
     this.userProfile = null;
   }
 }
+
+type UserProfileStoreDependencies = PickInjectedDependencies<'apiService'>;

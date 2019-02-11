@@ -1,6 +1,7 @@
+import {PickInjectedDependencies} from '@ram-stack/context';
 import React from 'react';
 
-export const AppView = ({Shell, appStore}) => {
+export const AppView = ({Shell, appStore}: AppViewProps) => {
   return (
     <div>
       <Shell.ProfilePage />
@@ -10,3 +11,5 @@ export const AppView = ({Shell, appStore}) => {
     </div>
   );
 };
+
+type AppViewProps = PickInjectedDependencies<'Shell' | 'appStore'>;

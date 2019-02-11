@@ -1,9 +1,9 @@
+import {PickInjectedDependencies} from '@ram-stack/context';
 import {computed, task} from '@ram-stack/core';
-import {SessionStore, UserProfileStore} from '../user';
 
 export class AppStore {
-  userProfileStore: UserProfileStore;
-  sessionStore: SessionStore;
+  userProfileStore: AppStoreDependencies['userProfileStore'];
+  sessionStore: AppStoreDependencies['sessionStore'];
 
   login = task(async (credentials: any) => {
     await this.sessionStore.login(credentials);
@@ -15,7 +15,7 @@ export class AppStore {
     await this.userProfileStore.reset();
   });
 
-  constructor({sessionStore, userProfileStore}) {
+  constructor({sessionStore, userProfileStore}: AppStoreDependencies) {
     this.userProfileStore = userProfileStore;
     this.sessionStore = sessionStore;
   }
@@ -27,3 +27,5 @@ export class AppStore {
     );
   }
 }
+
+type AppStoreDependencies = PickInjectedDependencies<'userProfileStore' | 'sessionStore'>;

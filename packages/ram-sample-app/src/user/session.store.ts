@@ -1,3 +1,4 @@
+import {PickInjectedDependencies} from '@ram-stack/context';
 import {computed, observable, task} from '@ram-stack/core';
 
 interface Session {
@@ -5,7 +6,7 @@ interface Session {
 }
 
 export class SessionStore {
-  apiService;
+  apiService: SessionStoreDependencies['apiService'];
   @observable session: Session;
 
   login = task.resolved(async (credentials: any) => {
@@ -16,7 +17,7 @@ export class SessionStore {
     this.session = await this.apiService.logout();
   });
 
-  constructor({apiService}) {
+  constructor({apiService}: SessionStoreDependencies) {
     this.apiService = apiService;
   }
 
@@ -27,3 +28,5 @@ export class SessionStore {
     );
   }
 }
+
+type SessionStoreDependencies = PickInjectedDependencies<'apiService'>;
