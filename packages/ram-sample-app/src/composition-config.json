@@ -28,7 +28,7 @@
       }
     },
     "Views": {
-      "extends": "Components",
+      "inherit": "Components",
       "ext": ".view.tsx",
       "registrations.container": {
         "naming.registration.suffix": "View",
@@ -41,7 +41,7 @@
       }
     },
     "Pages": {
-      "extends": "Views",
+      "inherit": "Views",
       "ext": ".page.tsx",
       "registrations.container": {
         "naming.registration.suffix": "Page",
@@ -49,7 +49,7 @@
       }
     },
     "Stores": {
-      "extends": "Classes",
+      "inherit": "Classes",
       "ext": ".store.ts",
       "registrations.container": {
         "naming.registration.suffix": "Store",
@@ -57,7 +57,7 @@
       }
     },
     "Services": {
-      "extends": "Classes",
+      "inherit": "Classes",
       "ext": ".service.ts",
       "registrations.container": {
         "naming.registration.suffix": "Service",

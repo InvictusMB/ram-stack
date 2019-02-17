@@ -21,8 +21,8 @@ function preprocessRules(rules) {
   return _.chain(rules)
     .pickBy(rule => !rule.isAbstract)
     .mapValues(rule => {
-      while (rule.extends) {
-        rule = extendRule(rule, rules[rule.extends]);
+      while (rule.inherit) {
+        rule = extendRule(rule, rules[rule.inherit]);
       }
       return rule;
     })
@@ -32,6 +32,6 @@ function preprocessRules(rules) {
 function extendRule(rule, parent) {
   return _.merge({},
     _.omit(parent, 'isAbstract'),
-    _.omit(rule, 'extends'),
+    _.omit(rule, 'inherit'),
   );
 }
