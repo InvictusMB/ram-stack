@@ -27,6 +27,13 @@ export class SessionStore {
       || this.logout.pending
     );
   }
+
+  @computed get isLoggedIn() {
+    return (
+      !!this.session
+      && this.session.isLoggedIn
+    );
+  }
 }
 
 type SessionStoreDependencies = PickInjectedDependencies<'apiService'>;
