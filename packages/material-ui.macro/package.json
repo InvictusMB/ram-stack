@@ -1,0 +1,31 @@
+{
+  "name": "@ram-stack/material-ui.macro",
+  "version": "1.0.0",
+  "description": "Macro helper for importing Material UI components",
+  "main": "macro.js",
+  "types": "macro.d.ts",
+  "files": [
+    "macro.js",
+    "macro.d.ts"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "author": "InvictusMB <invictusmb@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InvictusMB/ram-stack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/InvictusMB/ram-stack/issues"
+  },
+  "homepage": "https://github.com/InvictusMB/ram-stack#readme",
+  "license": "MIT",
+  "peerDependencies": {
+    "@material-ui/core": ">=3"
+  },
+  "dependencies": {
+    "babel-plugin-macros": "^2.5.1"
+  },
+  "devDependencies": {}
+}
