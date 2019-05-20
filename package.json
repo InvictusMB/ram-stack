@@ -1,0 +1,16 @@
+{
+  "name": "@ram-stack/root",
+  "private": true,
+  "author": "InvictusMB <invictusmb@gmail.com>",
+  "scripts": {
+    "test": "lerna run test",
+    "build": "lerna run build",
+    "lerna": "lerna"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.14.1"
+  }
+}

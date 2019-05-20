@@ -6,7 +6,9 @@
   "types": "macro.d.ts",
   "files": [
     "macro.js",
-    "macro.d.ts"
+    "macro.d.ts",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
