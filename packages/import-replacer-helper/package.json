@@ -1,33 +1,27 @@
 {
-  "name": "@ram-stack/material-ui-icons.macro",
+  "name": "@ram-stack/import-replacer-helper",
   "version": "1.0.0",
-  "description": "Macro helper for importing Material UI icons",
-  "main": "macro.js",
-  "types": "macro.d.ts",
+  "description": "A helper to create import replacing macros",
+  "main": "index.js",
   "files": [
-    "macro.js",
-    "macro.d.ts",
+    "index.js",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
   },
-  "author": "InvictusMB <invictusmb@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/InvictusMB/ram-stack.git"
   },
+  "author": "InvictusMB <invictusmb@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/InvictusMB/ram-stack/issues"
   },
   "homepage": "https://github.com/InvictusMB/ram-stack#readme",
-  "license": "MIT",
-  "peerDependencies": {
-    "@material-ui/icons": ">=3"
-  },
   "dependencies": {
-    "@ram-stack/import-replacer-helper": "^1.0.0"
-  },
-  "devDependencies": {}
+    "babel-plugin-macros": "^2.5.1"
+  }
 }

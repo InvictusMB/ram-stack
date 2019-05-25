@@ -68,6 +68,7 @@ No extra setup is required. This package reexports the typings from `@material-u
 ## See also
 
 [`@ram-stack/material-ui-cons.macro`](../material-ui-icons.macro/README.md)
+[`@ram-stack/import-replacer-helper`](../import-replacer-helper/README.md)
 
 [`babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros)
 

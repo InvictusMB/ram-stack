@@ -27,7 +27,7 @@
     "@material-ui/core": ">=3"
   },
   "dependencies": {
-    "babel-plugin-macros": "^2.5.1"
+    "@ram-stack/import-replacer-helper": "^1.0.0"
   },
   "devDependencies": {}
 }
