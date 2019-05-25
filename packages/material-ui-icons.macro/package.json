@@ -1,6 +1,6 @@
 {
   "name": "@ram-stack/material-ui-icons.macro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Macro helper for importing Material UI icons",
   "main": "macro.js",
   "types": "macro.d.ts",
@@ -27,7 +27,6 @@
     "@material-ui/icons": ">=3"
   },
   "dependencies": {
-    "@ram-stack/import-replacer-helper": "^1.0.0"
-  },
-  "devDependencies": {}
+    "@ram-stack/import-replacer-helper": "^1.0.1"
+  }
 }

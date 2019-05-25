@@ -1,6 +1,6 @@
 {
   "name": "@ram-stack/import-replacer-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A helper to create import replacing macros",
   "main": "index.js",
   "files": [
