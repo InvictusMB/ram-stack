@@ -41,6 +41,12 @@ function createReplacerMacro(config) {
             jsxClosingElementNamePath.replaceWith(types.JSXIdentifier(id));
             break;
           case 'Identifier':
+            if (
+              types.isTSQualifiedName(reference.parentPath)
+              || types.isQualifiedTypeIdentifier(reference.parentPath)
+            ) {
+              break;
+            }
             if (!types.isMemberExpression(reference.parentPath)) {
               throw new TypeError(`Unexpected parent node type: ${reference.parentPath.type}`);
             }
