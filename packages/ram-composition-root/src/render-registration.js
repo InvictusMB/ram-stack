@@ -5,7 +5,16 @@ module.exports = {
 };
 
 function renderRegistration(registrationData) {
-  const {identifier, registration, decorators, modifiers, filePath} = registrationData;
+  const {
+    identifier,
+    registration,
+    filePath,
+    rule,
+  } = registrationData;
+  const {
+    decorators = [],
+    modifiers = [],
+  } = rule;
   let expression = `require('./${filePath}').${identifier}`;
   expression = _.reduce(decorators,
     (acc, decorator) => applyDecorator(decorator, acc), expression,

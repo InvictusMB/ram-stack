@@ -25,53 +25,23 @@ function processRule(rule, context) {
 
   return _.mapValues(rule.registrations,
     compositionRootRule => {
-      return getCompositionRootRegistrations(
+      return getRuleMatches(
         cwd, rule.ext, compositionRootRule, rootPath,
-      );
+      )
     },
   );
 }
 
-function getCompositionRootRegistrations(cwd, ext, compositionRootRule, rootPath) {
-  const {
-    naming,
-    decorators = [],
-    modifiers = [],
-  } = compositionRootRule;
-
+function getRuleMatches(cwd, ext, compositionRootRule, rootPath) {
   const modules = glob.sync(path.join(cwd, rootPath, '**/*' + ext));
   return modules
     .map(filePath => path.relative(cwd, filePath))
     .map(filePath => filePath.replace(/\\/g, '/'))
     .map(filePath => {
-      const {identifier, registration} = getNames(naming, filePath, ext);
       return {
-        identifier,
-        registration,
-        decorators,
-        modifiers,
-        filePath
+        ext,
+        filePath,
+        rule: compositionRootRule,
       };
     });
-}
-
-function getNames(namingRules, filePath, ext) {
-  return _.chain(namingRules)
-    .defaults({
-      identifier: {},
-      registration: {}
-    })
-    .mapValues(rule => applyNamingRule(rule, filePath, ext))
-    .value();
-}
-
-function applyNamingRule(namingRule = {}, filePath, ext) {
-  const casingFunctions = {
-    pascal: id => _.upperFirst(_.camelCase(id)),
-    camel: _.camelCase,
-    snake: _.snakeCase,
-  };
-  const {casing = 'pascal', prefix, suffix} = namingRule;
-  const id = path.basename(filePath, ext);
-  return [prefix, casingFunctions[casing](id), suffix].join('');
 }

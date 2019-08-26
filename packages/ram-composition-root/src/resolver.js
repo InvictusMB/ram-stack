@@ -1,6 +1,7 @@
 const _ = require('lodash');
 
 const {processRule} = require('./rule-engine');
+const {processNamingRules} = require('./naming-rules');
 const {renderRegistration} = require('./render-registration');
 
 module.exports = {
@@ -24,9 +25,10 @@ function resolveContext(context) {
     return removeReference(insertionNodePath);
   }
 
-  const ruleOutput = processRule(rule, context);
+  const ruleMatches = processRule(rule, context);
 
-  const roots = _.chain(ruleOutput)
+  const roots = _.chain(ruleMatches)
+    .mapValues(matches => _.map(matches, processNamingRules))
     .map(_.partial(renderCompositionRootRegistrations, compositionRoots))
     .filter()
     .value();
@@ -42,11 +44,11 @@ function resolveContext(context) {
   }
 }
 
-function renderCompositionRootRegistrations(compositionRoots, rawRegistrations, root) {
-  if (!rawRegistrations.length) {
+function renderCompositionRootRegistrations(compositionRoots, ruleMatches, root) {
+  if (!ruleMatches.length) {
     return null;
   }
-  const registrations = _.map(rawRegistrations, renderRegistration);
+  const registrations = _.map(ruleMatches, renderRegistration);
   const template = _.template(compositionRoots[root].template);
   return template({root, registrations});
 }
