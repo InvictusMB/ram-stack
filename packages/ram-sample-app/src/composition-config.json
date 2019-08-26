@@ -3,7 +3,7 @@
     "container.template": "<%= root %>.register({<%= registrations %>});"
   },
   "rules": {
-    "Classes": {
+    "ClassInstances": {
       "isAbstract": true,
       "registrations.container": {
         "naming.registration.casing": "camel",
@@ -13,6 +13,16 @@
         ],
         "modifiers": [
           "singleton"
+        ]
+      }
+    },
+    "Classes": {
+      "isAbstract": true,
+      "registrations.container": {
+        "naming.registration.casing": "pascal",
+        "naming.identifier.casing": "pascal",
+        "decorators": [
+          "asValue"
         ]
       }
     },
@@ -48,7 +58,7 @@
         "naming.identifier.suffix": "Page"
       }
     },
-    "Stores": {
+    "StoreClasses": {
       "inherit": "Classes",
       "ext": ".store.ts",
       "registrations.container": {
@@ -56,8 +66,24 @@
         "naming.identifier.suffix": "Store"
       }
     },
-    "Services": {
+    "StoreInstances": {
+      "inherit": "ClassInstances",
+      "ext": ".store.ts",
+      "registrations.container": {
+        "naming.registration.suffix": "Store",
+        "naming.identifier.suffix": "Store"
+      }
+    },
+    "ServiceClasses": {
       "inherit": "Classes",
+      "ext": ".service.ts",
+      "registrations.container": {
+        "naming.registration.suffix": "Service",
+        "naming.identifier.suffix": "Service"
+      }
+    },
+    "ServiceInstances": {
+      "inherit": "ClassInstances",
       "ext": ".service.ts",
       "registrations.container": {
         "naming.registration.suffix": "Service",
@@ -69,8 +95,10 @@
         "Components",
         "Views",
         "Pages",
-        "Stores",
-        "Services"
+        "StoreClasses",
+        "StoreInstances",
+        "ServiceClasses",
+        "ServiceInstances"
       ]
     }
   }
