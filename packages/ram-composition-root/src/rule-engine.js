@@ -45,15 +45,13 @@ function getCompositionRootRegistrations(cwd, ext, compositionRootRule, rootPath
     .map(filePath => filePath.replace(/\\/g, '/'))
     .map(filePath => {
       const {identifier, registration} = getNames(naming, filePath, ext);
-      let expression = `require('./${filePath}').${identifier}`;
-      expression = _.reduce(decorators,
-        (acc, decorator) => applyDecorator(decorator, acc), expression,
-      );
-      expression = _.reduce(modifiers,
-        (acc, modifier) => applyModifier(modifier, acc), expression,
-      );
-
-      return `${registration}: ${expression}`;
+      return {
+        identifier,
+        registration,
+        decorators,
+        modifiers,
+        filePath
+      };
     });
 }
 
@@ -76,12 +74,4 @@ function applyNamingRule(namingRule = {}, filePath, ext) {
   const {casing = 'pascal', prefix, suffix} = namingRule;
   const id = path.basename(filePath, ext);
   return [prefix, casingFunctions[casing](id), suffix].join('');
-}
-
-function applyDecorator(decorator, expr) {
-  return `${decorator}(${expr})`;
-}
-
-function applyModifier(modifier, expr) {
-  return `${expr}.${modifier}()`;
 }
