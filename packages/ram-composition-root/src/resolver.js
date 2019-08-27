@@ -2,6 +2,7 @@ const _ = require('lodash');
 
 const {processRule} = require('./rule-engine');
 const {processNamingRules} = require('./naming-rules');
+const {runPlugins} = require('./plugin-runner');
 const {renderRegistration} = require('./render-registration');
 
 module.exports = {
@@ -29,6 +30,7 @@ function resolveContext(context) {
 
   const roots = _.chain(ruleMatches)
     .mapValues(matches => _.map(matches, processNamingRules))
+    .tap(_.partial(runPlugins, configAbsolutePath, compositionRoots))
     .map(_.partial(renderCompositionRootRegistrations, compositionRoots))
     .filter()
     .value();
