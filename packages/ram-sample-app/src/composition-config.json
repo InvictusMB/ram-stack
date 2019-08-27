@@ -1,6 +1,16 @@
 {
   "compositionRoots": {
-    "container.template": "<%= root %>.register({<%= registrations %>});"
+    "container": {
+      "template": "<%= root %>.register({<%= registrations %>});",
+      "plugins": [
+        ["template-emitter", {
+          "configPath": "tsContext",
+          "placeholders": ["top", "shell"],
+          "templateFilename": "./ram-context.d.ts.template",
+          "outputFilename": "./ram-context.d.ts"
+        }]
+      ]
+    }
   },
   "rules": {
     "ClassInstances": {
@@ -13,7 +23,10 @@
         ],
         "modifiers": [
           "singleton"
-        ]
+        ],
+        "tsContext": {
+          "template.top": "<%= registration %>: import('./<%= filePath %>').<%= identifier %>"
+        }
       }
     },
     "Classes": {
@@ -23,7 +36,10 @@
         "naming.identifier.casing": "pascal",
         "decorators": [
           "asValue"
-        ]
+        ],
+        "tsContext": {
+          "template.top": "<%= registration %>: typeof import('./<%= filePath %>').<%= identifier %>"
+        }
       }
     },
     "Components": {
@@ -34,7 +50,10 @@
         "decorators": [
           "withContainer",
           "asValue"
-        ]
+        ],
+        "tsContext": {
+          "template.shell": "<%= registration %>: WrappedComponent<typeof import('./<%= filePath %>').<%= identifier %>>"
+        }
       }
     },
     "Views": {
