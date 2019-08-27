@@ -137,4 +137,4 @@ TODO:
 * Improve error reporting when no files match rule
 * YAML for configuration?
 * Also wire routing in the application composition root
-* Generate TS top level `.d.ts` file with all the things in container to help TypeScript without resorting back to relative path imports again
+
