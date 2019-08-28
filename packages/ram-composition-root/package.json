@@ -1,9 +1,14 @@
 {
   "name": "@ram-stack/composition-root",
   "version": "1.0.0",
-  "private": true,
   "description": "Babel macro to define application composition root",
   "main": "./dist",
+  "files": [
+    "dist",
+    "macro.js",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "build": "cpr ./src ./dist -d"
