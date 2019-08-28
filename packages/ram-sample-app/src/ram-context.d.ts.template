@@ -4,8 +4,12 @@ declare module '@ram-stack/context' {
   type InferProps<C> = C extends import('react').ComponentType<infer P> ? P : never;
   // Omit taken from https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html
   type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+  type OwnKeys<T, K> = Extract<K, keyof T>;
+  // WithOptional inspired by https://github.com/Microsoft/TypeScript/issues/25760#issuecomment-405931434
+  type WithOptional<T, K> = Omit<T, OwnKeys<T, K>> & Partial<Pick<T, OwnKeys<T, K>>>;
 
-  type WrappedComponent<T> = import('react').ComponentClass<Omit<InferProps<T>, keyof InjectedDependencies>, any>;
+  type WrappedComponent<T> =
+    import('react').ComponentClass<WithOptional<InferProps<T>, keyof InjectedDependencies>, any>;
 
   export type InjectedDependencies = {
 <%= top.map(v => '    ' + v).join(',\n') %>,
