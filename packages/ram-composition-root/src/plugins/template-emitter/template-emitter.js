@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
+const os = require('os');
 
 module.exports = function templateEmitterPlugin(options, ruleMatches) {
   const {
@@ -14,6 +15,7 @@ module.exports = function templateEmitterPlugin(options, ruleMatches) {
   const inputPath = path.join(cwd, templateFilename);
   console.log(`[template-emitter] reading template: ${formatPath(inputPath)}`);
   const templateFile = fs.readFileSync(inputPath, 'utf-8');
+  const eol = getEol(templateFile);
 
   const orderedMatches = _.sortBy(ruleMatches, ['registration']);
 
@@ -33,7 +35,7 @@ module.exports = function templateEmitterPlugin(options, ruleMatches) {
   const output = header + _.template(templateFile)(renderedMatches);
 
   const outputPath = path.join(cwd, outputFilename);
-  fs.writeFileSync(outputPath, output, 'utf-8');
+  fs.writeFileSync(outputPath, normalizeEol(output, eol), 'utf-8');
   console.log(`[template-emitter] writing output: ${formatPath(outputPath)}`);
 };
 
@@ -55,4 +57,18 @@ function stripExtension(ext, filePath) {
 
 function formatPath(filePath) {
   return './' + path.normalize(path.relative(process.cwd(), filePath)).replace(path.sep, '/');
+}
+
+function getEol(text) {
+  const matches = text.match(/\r\n|\n/g) || [];
+  const unix = matches.filter(a => a === '\n').length;
+  const win = matches.length - unix;
+  if (unix === win) {
+    return os.EOL;
+  }
+  return unix > win ? '\n' : '\r\n';
+}
+
+function normalizeEol(text, eol) {
+  return text.replace(/\r\n|\n/g, eol);
 }
