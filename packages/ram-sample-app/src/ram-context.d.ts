@@ -61,6 +61,7 @@ declare module '@ram-stack/context' {
     AppView: WrappedComponent<typeof import('./app/app.view').AppView>,
     Button: WrappedComponent<typeof import('./components/button.component').Button>,
     CreateScope: WrappedComponent<typeof import('./components/create-scope.component').CreateScope>,
+    ProgressIndicator: WrappedComponent<typeof import('./components/progress-indicator.component').ProgressIndicator>,
     Spoiler: WrappedComponent<typeof import('./components/spoiler.component').Spoiler>,
     UserProfileView: WrappedComponent<typeof import('./user/user-profile.view').UserProfileView>,
   };

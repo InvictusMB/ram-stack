@@ -15,9 +15,9 @@ export class UserProfileStore {
   readonly loginReaction;
   @observable userProfile: UserProfile = null;
 
-  load = task(async () => {
+  load = task.resolved(async () => {
     this.userProfile = await this.apiService.getUserProfile();
-  });
+  }, {swallow: true});
 
   constructor({apiService, sessionStore}: UserProfileStoreDependencies) {
     this.apiService = apiService;
@@ -38,7 +38,7 @@ export class UserProfileStore {
 
   @computed get isFetching() {
     return (
-      this.load.pending
+      this.load.pending || this.sessionStore.isFetching
     );
   }
 

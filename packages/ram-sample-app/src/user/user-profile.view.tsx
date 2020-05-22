@@ -4,7 +4,8 @@ export function UserProfileView(props: UserProfileViewProps) {
   const {Shell, userProfileStore} = props;
   return (
     <div>
-      <h3>Hello {getName(userProfileStore.userProfile)}!</h3>
+      {userProfileStore.isFetching && <Shell.ProgressIndicator />}
+      {!userProfileStore.isFetching && <h3>Hello {getName(userProfileStore)}!</h3>}
       <Shell.Button onClick={() => userProfileStore.load()}>
         getUserProfile
       </Shell.Button>
@@ -18,6 +19,9 @@ UserProfileView.dependencies = [
 ];
 type UserProfileViewProps = PickInjected<typeof UserProfileView.dependencies>;
 
-function getName(userProfile) {
-  return (userProfile && userProfile.name) || 'Anonymous';
+function getName(store: Injected.classes.UserProfileStore) {
+  if (store.load.error) {
+    return 'Error';
+  }
+  return store.userProfile?.name || 'Anonymous';
 }
