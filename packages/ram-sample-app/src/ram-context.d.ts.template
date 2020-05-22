@@ -3,6 +3,7 @@ type PickInjected<K> = import('@ram-stack/context').PickInjected<K>;
 namespace Injected {
 <%= injectedId.map(v => '  ' + v ).join(';\n') %><%= injectedId.length ? ';' : '    // to be generated...' %>
   export const Shell = 'Shell' as const;
+  export const ContainerContext = 'ContainerContext' as const;
 
   namespace classes {
     export * from '@ram-stack/context/classes';
@@ -27,6 +28,7 @@ declare module '@ram-stack/context' {
   type InjectedDependencies = {
 <%= top.map(v => '    ' + v).join(',\n') %><%= top.length ? ',' : '    // to be generated...' %>
     Shell: Shell,
+    ContainerContext: React.Context<import('@ram-stack/core').Container<InjectedDependencies>>,
   };
 
   type Shell = {

@@ -1,16 +1,20 @@
 import {asValue, asFunction, useObserver} from '@ram-stack/core';
 import hoistStatics from 'hoist-non-react-statics';
+import React from 'react';
 
 import './ram-context';
 
-const Injected = (global || window).Injected;
-
 export function createInjector(container) {
   const shell = createShell(container);
-  return component => withContainer(shell, component);
+  const ContainerContext = React.createContext(shell);
+  container.register({
+    Shell: asValue(shell.cradle),
+    ContainerContext: asValue(ContainerContext),
+  });
+  return component => withContainer(ContainerContext, component);
 }
 
-export function withContainer(container, component) {
+export function withContainer(ContainerContext, component) {
   const componentName = (
     component.displayName
     || component.name
@@ -19,6 +23,7 @@ export function withContainer(container, component) {
   );
 
   function Injector(props) {
+    const container = React.useContext(ContainerContext);
     const deps = resolveDependencies(container, component);
 
     const newProps = {
@@ -54,10 +59,6 @@ function resolveDependencies(diContainer, component) {
   const dependencies = validateDependencies(diContainer, component);
   const registrations = dependencies || [];
   return registrations.reduce((acc, name) => {
-    if (name === Injected.Shell) {
-      acc[name] = diContainer.cradle;
-      return acc;
-    }
     acc[name] = diContainer.resolve(name);
     return acc;
   }, {});
@@ -76,5 +77,5 @@ function validateDependencies(diContainer, component) {
     );
     return [];
   }
-  return [Injected.Shell].concat(dependencies);
+  return dependencies;
 }

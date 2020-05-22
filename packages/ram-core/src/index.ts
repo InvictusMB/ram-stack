@@ -1,4 +1,4 @@
-export {asClass, asValue, asFunction} from 'awilix';
+export {asClass, asValue, asFunction, AwilixContainer as Container} from 'awilix';
 export * from 'mobx';
 export * from 'mobx-react-lite';
 export {task} from 'mobx-task';

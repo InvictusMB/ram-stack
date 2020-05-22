@@ -13,6 +13,7 @@ namespace Injected {
   export const sessionStore = 'sessionStore' as const;
   export const userProfileStore = 'userProfileStore' as const;
   export const Shell = 'Shell' as const;
+  export const ContainerContext = 'ContainerContext' as const;
 
   namespace classes {
     export * from '@ram-stack/context/classes';
@@ -47,6 +48,7 @@ declare module '@ram-stack/context' {
     sessionStore: import('./user/session.store').SessionStore,
     userProfileStore: import('./user/user-profile.store').UserProfileStore,
     Shell: Shell,
+    ContainerContext: React.Context<import('@ram-stack/core').Container<InjectedDependencies>>,
   };
 
   type Shell = {
