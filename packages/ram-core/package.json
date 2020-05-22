@@ -23,12 +23,12 @@
   },
   "homepage": "https://github.com/InvictusMB/ram-stack/packages/ram-core#readme",
   "devDependencies": {
-    "typescript": "^3.3.3"
+    "typescript": "^3.9.3"
   },
   "dependencies": {
-    "awilix": "^4.2.0",
-    "mobx": "^5.9.0",
-    "mobx-react": "^5.4.3",
-    "mobx-task": "^1.0.1"
+    "awilix": "^4.2.6",
+    "mobx": "^5.15.4",
+    "mobx-react-lite": "^2.0.7",
+    "mobx-task": "^2.0.1"
   }
 }

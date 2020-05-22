@@ -1,8 +1,6 @@
-// tslint:disable-next-line
-/// <reference path="../mobx-task.d.ts" />
 export {asClass, asValue, asFunction} from 'awilix';
 export * from 'mobx';
-export * from 'mobx-react';
+export * from 'mobx-react-lite';
 export {task} from 'mobx-task';
 
 import {createContainer as createAwilixContainer, InjectionMode} from 'awilix';
