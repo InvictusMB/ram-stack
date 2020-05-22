@@ -18,5 +18,18 @@ registerModule({
 }, '.');
 
 const AppView = container.resolve('AppView') as any;
+const CreateScope = container.resolve('CreateScope') as any;
 
-render(<AppView />, document.getElementById('root'));
+render((
+  <div>
+    <CreateScope>
+      <h2>App 1</h2>
+      <AppView />
+    </CreateScope>
+    <CreateScope>
+      <h2>App 2</h2>
+      <AppView />
+    </CreateScope>
+  </div>
+), document.getElementById('root'));
+

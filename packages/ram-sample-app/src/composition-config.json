@@ -28,7 +28,7 @@
           "asClass"
         ],
         "modifiers": [
-          "singleton"
+          "scoped"
         ],
         "jsContext": {
           "template.injectedId": "<%= registration %>: '<%= registration %>'"
