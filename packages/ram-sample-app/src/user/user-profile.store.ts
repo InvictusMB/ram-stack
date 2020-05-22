@@ -1,4 +1,3 @@
-import {PickInjectedDependencies} from '@ram-stack/context';
 import {computed, observable, reaction, task} from '@ram-stack/core';
 
 interface UserProfile {
@@ -6,8 +5,8 @@ interface UserProfile {
 }
 
 export class UserProfileStore {
-  readonly apiService: UserProfileStoreDependencies['apiService'];
-  readonly sessionStore: UserProfileStoreDependencies['sessionStore'];
+  readonly apiService: Injected.classes.ApiService;
+  readonly sessionStore: Injected.classes.SessionStore;
   readonly loginReaction;
   @observable userProfile: UserProfile = null;
 
@@ -43,4 +42,8 @@ export class UserProfileStore {
   }
 }
 
-type UserProfileStoreDependencies = PickInjectedDependencies<'apiService' | 'sessionStore'>;
+const dependencies = [
+  Injected.apiService,
+  Injected.sessionStore,
+];
+type UserProfileStoreDependencies = PickInjected<typeof dependencies>;

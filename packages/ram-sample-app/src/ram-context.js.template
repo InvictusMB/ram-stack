@@ -1,0 +1,6 @@
+const Injected = {
+<%= injectedId.map(v => '  ' + v ).join(',\n') %><%= injectedId.length ? ',' : '  // to be generated...' %>
+  Shell: 'Shell',
+};
+
+window.Injected = Injected;

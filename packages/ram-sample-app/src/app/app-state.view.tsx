@@ -1,4 +1,3 @@
-import {PickInjectedDependencies} from '@ram-stack/context';
 import {toJS} from '@ram-stack/core';
 import React from 'react';
 
@@ -13,4 +12,8 @@ export function AppStateView({appStore}: AppStateViewProps) {
   );
 }
 
-type AppStateViewProps = PickInjectedDependencies<'appStore'>;
+const dependencies = [
+  Injected.appStore,
+];
+Object.assign(AppStateView, {dependencies});
+type AppStateViewProps = PickInjected<typeof dependencies>;

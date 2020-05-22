@@ -5,9 +5,15 @@
       "plugins": [
         ["template-emitter", {
           "configPath": "tsContext",
-          "placeholders": ["top", "shell"],
+          "placeholders": ["top", "shell", "injectedId", "classes"],
           "templateFilename": "./ram-context.d.ts.template",
           "outputFilename": "./ram-context.d.ts"
+        }],
+        ["template-emitter", {
+          "configPath": "jsContext",
+          "placeholders": ["injectedId"],
+          "templateFilename": "./ram-context.js.template",
+          "outputFilename": "./ram-context.js"
         }]
       ]
     }
@@ -24,7 +30,11 @@
         "modifiers": [
           "singleton"
         ],
+        "jsContext": {
+          "template.injectedId": "<%= registration %>: '<%= registration %>'"
+        },
         "tsContext": {
+          "template.injectedId": "export const <%= registration %> = '<%= registration %>' as const",
           "template.top": "<%= registration %>: import('./<%= filePath %>').<%= identifier %>"
         }
       }
@@ -37,7 +47,12 @@
         "decorators": [
           "asValue"
         ],
+        "jsContext": {
+          "template.injectedId": "<%= registration %>: '<%= registration %>'"
+        },
         "tsContext": {
+          "template.injectedId": "export const <%= registration %> = '<%= registration %>' as const",
+          "template.classes": "type <%= registration %> = import('./<%= filePath %>').<%= registration %>",
           "template.top": "<%= registration %>: typeof import('./<%= filePath %>').<%= identifier %>"
         }
       }
@@ -63,7 +78,6 @@
         "naming.registration.suffix": "View",
         "naming.identifier.suffix": "View",
         "decorators": [
-          "observer",
           "withContainer",
           "asValue"
         ]

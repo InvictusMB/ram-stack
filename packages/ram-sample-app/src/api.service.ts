@@ -1,32 +1,37 @@
-let isLoggedIn = false;
+export class ApiService {
+  isLoggedIn: boolean = false;
+  name: string = '';
 
-export function login(credentials) {
-  isLoggedIn = true;
-  return delay({isLoggedIn});
-}
-
-export function logout() {
-  isLoggedIn = false;
-  return delay({isLoggedIn});
-}
-
-export function getUserProfile() {
-  if (!isLoggedIn) {
-    return delay(Promise.reject());
+  async login({name}) {
+    this.name = name;
+    this.isLoggedIn = true;
+    return resolveWithDelay({isLoggedIn: this.isLoggedIn});
   }
-  return delay({
-    name: 'John Doe',
-  });
+
+  async logout() {
+    this.name = '';
+    this.isLoggedIn = false;
+    return resolveWithDelay({isLoggedIn: this.isLoggedIn});
+  }
+
+  async getUserProfile() {
+    if (!this.isLoggedIn) {
+      return rejectWithDelay(new Error('Not logged in'));
+    }
+    return resolveWithDelay({
+      name: this.name,
+    });
+  }
 }
 
-function delay<T>(value: T = null, ms = 1000) {
+async function resolveWithDelay<T>(value: T = null, ms = 1000) {
   return new Promise<T>((resolve) => {
     setTimeout(() => resolve(value), ms);
   });
 }
 
-export class ApiService {
-  getUserProfile = getUserProfile;
-  login = login;
-  logout = logout;
+async function rejectWithDelay<T>(error: T = null, ms = 1000) {
+  return new Promise<T>((resolve, reject) => {
+    setTimeout(() => reject(error), ms);
+  });
 }

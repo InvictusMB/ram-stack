@@ -1,9 +1,8 @@
-import {PickInjectedDependencies} from '@ram-stack/context';
 import {computed} from '@ram-stack/core';
 
 export class AppStore {
-  userProfileStore: AppStoreDependencies['userProfileStore'];
-  sessionStore: AppStoreDependencies['sessionStore'];
+  userProfileStore: Injected.classes.UserProfileStore;
+  sessionStore: Injected.classes.SessionStore;
 
   constructor({sessionStore, userProfileStore}: AppStoreDependencies) {
     this.userProfileStore = userProfileStore;
@@ -18,4 +17,8 @@ export class AppStore {
   }
 }
 
-type AppStoreDependencies = PickInjectedDependencies<'userProfileStore' | 'sessionStore'>;
+const dependencies = [
+  Injected.userProfileStore,
+  Injected.sessionStore,
+];
+type AppStoreDependencies = PickInjected<typeof dependencies>;

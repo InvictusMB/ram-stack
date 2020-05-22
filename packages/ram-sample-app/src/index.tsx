@@ -1,8 +1,8 @@
 import {registerModule} from '@ram-stack/composition-root/macro';
-import {asClass, asValue, createContainer, observer} from '@ram-stack/core';
+import {asClass, asValue, createContainer} from '@ram-stack/core';
 import React from 'react';
 import {render} from 'react-dom';
-import {createInjector} from './withContainer';
+import {createInjector} from './with-container';
 
 import './style.css';
 
@@ -14,7 +14,6 @@ registerModule({
   asClass,
   asValue,
   container,
-  observer,
   withContainer,
 }, '.');
 
