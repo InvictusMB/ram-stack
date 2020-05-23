@@ -44,6 +44,7 @@ export class UserProfileStore {
 
   reset() {
     this.userProfile = null;
+    this.load.reset();
   }
 }
 
