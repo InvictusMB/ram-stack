@@ -132,8 +132,6 @@ Meaning that it should be trivial to infer from rule X that thing Y ends up in t
 And therefore all the files affected by rule X have access to all the other things within container Z.  
 
 TODO:
-* Validate references passed to the macro to match the decorators and containers used in code
-* Error out on undefined identifiers referenced from composition config 
 * Improve error reporting when no files match rule
 * YAML for configuration?
 * Also wire routing in the application composition root

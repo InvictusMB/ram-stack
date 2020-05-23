@@ -1,4 +1,7 @@
 {
+  "plugins": [
+    "ts-macro-definition"
+  ],
   "compositionRoots": {
     "container": {
       "template": "<%= root %>.register({<%= registrations %>});",
