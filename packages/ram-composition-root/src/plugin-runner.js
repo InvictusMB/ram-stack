@@ -3,6 +3,7 @@ const _ = require('lodash');
 
 module.exports = {
   runPlugins,
+  runGlobalPlugins,
 };
 
 function runPlugins(configAbsolutePath, compositionRoots, ruleMatches) {
@@ -12,18 +13,43 @@ function runPlugins(configAbsolutePath, compositionRoots, ruleMatches) {
 
   _.forEach(compositionRoots, (root, rootName) => {
     const rootMatches = ruleMatches[rootName] || [];
-    _.forEach(root.plugins, pluginDefinition => {
-      if (_.isString(pluginDefinition)) {
-        requirePlugin(pluginDefinition)(_.cloneDeep(defaultOptions), rootMatches);
-      } else {
-        const [name, pluginOptions] = pluginDefinition;
-        const options = _.extend({}, _.cloneDeep(defaultOptions), _.cloneDeep(pluginOptions));
-        requirePlugin(name)(options, rootMatches);
-      }
+    const plugins = _.map(root.plugins, normalizeDefinition);
+    _.forEach(plugins, pluginDefinition => {
+      const [name, pluginOptions] = pluginDefinition;
+      const options = computeOptions(defaultOptions, pluginOptions);
+      requirePlugin(name)(options, rootMatches);
     });
   });
+}
 
-  function requirePlugin(name) {
-    return require('./plugins/' + _.kebabCase(name));
+function runGlobalPlugins(configAbsolutePath, compositionConfig) {
+  const defaultOptions = {
+    cwd: path.dirname(configAbsolutePath),
+  };
+  const plugins = _.map(compositionConfig.plugins, normalizeDefinition);
+  _.forEach(plugins, pluginDefinition => {
+    const [name, pluginOptions] = pluginDefinition;
+    const options = computeOptions(defaultOptions, pluginOptions);
+    requirePlugin(name)(options, compositionConfig);
+  });
+}
+
+function normalizeDefinition(pluginDefinition) {
+  if (_.isString(pluginDefinition)) {
+    return [pluginDefinition, {}];
   }
+  if (_.isArray(pluginDefinition)) {
+    return pluginDefinition;
+  }
+  console.warn('[composition-root/macro] Expected plugin definition to be "pluginName" or ["pluginName", config]');
+  console.dir(pluginDefinition);
+  throw new Error('[composition-root/macro] Failed to load a plugin definition');
+}
+
+function computeOptions(defaultOptions, pluginOptions) {
+  return _.extend({}, _.cloneDeep(defaultOptions), _.cloneDeep(pluginOptions));
+}
+
+function requirePlugin(name) {
+  return require('./plugins/' + _.kebabCase(name));
 }

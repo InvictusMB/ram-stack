@@ -10,8 +10,9 @@ function loadConfig(configPath) {
 }
 
 function parseConfig(config) {
-  const {rules, compositionRoots} = dot.object(dot.dot(config));
+  const {plugins, rules, compositionRoots} = dot.object(dot.dot(config));
   return {
+    plugins,
     rules: preprocessRules(rules),
     compositionRoots,
   };
