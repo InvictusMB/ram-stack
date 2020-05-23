@@ -1,3 +1,4 @@
+import type {InjectedDependencies} from '@ram-stack/context';
 import {registerModule} from '@ram-stack/composition-root/macro';
 import {asClass, asValue, createContainer} from '@ram-stack/core';
 import React from 'react';
@@ -6,7 +7,7 @@ import {createInjector} from './with-container';
 
 import './style.css';
 
-const container = createContainer();
+const container = createContainer<InjectedDependencies>();
 
 const withContainer = createInjector(container);
 
@@ -17,19 +18,18 @@ registerModule({
   withContainer,
 }, '.');
 
-const AppView = container.resolve('AppView') as any;
-const CreateScope = container.resolve('CreateScope') as any;
+const Shell = container.resolve('Shell');
 
 render((
   <div>
-    <CreateScope>
+    <Shell.CreateScope>
       <h2>App 1</h2>
-      <AppView />
-    </CreateScope>
-    <CreateScope>
+      <Shell.AppView />
+    </Shell.CreateScope>
+    <Shell.CreateScope>
       <h2>App 2</h2>
-      <AppView />
-    </CreateScope>
+      <Shell.AppView />
+    </Shell.CreateScope>
   </div>
 ), document.getElementById('root'));
 
