@@ -1,6 +1,11 @@
 import {computed} from '@ram-stack/core';
 
 export class AppStore {
+  static dependencies = [
+    Injected.userProfileStore,
+    Injected.sessionStore,
+  ];
+
   userProfileStore: Injected.classes.UserProfileStore;
   sessionStore: Injected.classes.SessionStore;
 
@@ -17,8 +22,4 @@ export class AppStore {
   }
 }
 
-const dependencies = [
-  Injected.userProfileStore,
-  Injected.sessionStore,
-];
-type AppStoreDependencies = PickInjected<typeof dependencies>;
+type AppStoreDependencies = PickInjected<typeof AppStore.dependencies>;

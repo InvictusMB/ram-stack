@@ -21,9 +21,14 @@ declare module '@ram-stack/context' {
   type OwnKeys<T, K> = Extract<K, keyof T>;
   // WithOptional inspired by https://github.com/Microsoft/TypeScript/issues/25760#issuecomment-405931434
   type WithOptional<T, K> = Omit<T, OwnKeys<T, K>> & Partial<Pick<T, OwnKeys<T, K>>>;
+  type ComponentWithDependencies<T> = import('react').FunctionComponent<T> & {
+    dependencies: readonly (keyof InjectedDependencies)[]
+  }
+  type ComponentDependencies<T> = T extends {dependencies: infer U} ? U : never;
 
-  type WrappedComponent<T> =
-    import('react').ComponentClass<WithOptional<InferProps<T>, keyof InjectedDependencies>, any>;
+  type WrappedComponent<T> = T extends ComponentWithDependencies<infer U>
+    ? import('react').FunctionComponent<WithOptional<InferProps<T>, ComponentDependencies<T>[number]>>
+    : T;
 
   type InjectedDependencies = {
 <%= top.map(v => '    ' + v).join(',\n') %><%= top.length ? ',' : '    // to be generated...' %>

@@ -14,9 +14,8 @@ export function AppStateView({Shell, appStore}: AppStateViewProps) {
   );
 }
 
-const dependencies = [
+AppStateView.dependencies = [
   Injected.Shell,
   Injected.appStore,
 ];
-Object.assign(AppStateView, {dependencies});
-type AppStateViewProps = PickInjected<typeof dependencies>;
+type AppStateViewProps = PickInjected<typeof AppStateView.dependencies>;

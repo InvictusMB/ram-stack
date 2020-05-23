@@ -12,12 +12,11 @@ export function UserProfileView(props: UserProfileViewProps) {
   );
 }
 
-const dependencies = [
+UserProfileView.dependencies = [
   Injected.Shell,
   Injected.userProfileStore,
 ];
-Object.assign(UserProfileView, {dependencies});
-type UserProfileViewProps = PickInjected<typeof dependencies>;
+type UserProfileViewProps = PickInjected<typeof UserProfileView.dependencies>;
 
 function getName(userProfile) {
   return (userProfile && userProfile.name) || 'Anonymous';

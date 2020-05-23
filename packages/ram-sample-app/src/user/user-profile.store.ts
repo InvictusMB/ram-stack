@@ -5,6 +5,11 @@ interface UserProfile {
 }
 
 export class UserProfileStore {
+  static dependencies = [
+    Injected.apiService,
+    Injected.sessionStore,
+  ];
+
   readonly apiService: Injected.classes.ApiService;
   readonly sessionStore: Injected.classes.SessionStore;
   readonly loginReaction;
@@ -42,8 +47,4 @@ export class UserProfileStore {
   }
 }
 
-const dependencies = [
-  Injected.apiService,
-  Injected.sessionStore,
-];
-type UserProfileStoreDependencies = PickInjected<typeof dependencies>;
+type UserProfileStoreDependencies = PickInjected<typeof UserProfileStore.dependencies>;

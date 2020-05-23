@@ -5,6 +5,10 @@ interface Session {
 }
 
 export class SessionStore {
+  static dependencies = [
+    Injected.apiService,
+  ];
+
   apiService: Injected.classes.ApiService;
   @observable session: Session;
 
@@ -35,7 +39,4 @@ export class SessionStore {
   }
 }
 
-const dependencies = [
-  Injected.apiService,
-];
-type SessionStoreDependencies = PickInjected<typeof dependencies>;
+type SessionStoreDependencies = PickInjected<typeof SessionStore.dependencies>;

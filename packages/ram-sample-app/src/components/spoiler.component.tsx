@@ -16,11 +16,10 @@ export function Spoiler({Shell, name, children}: SpoilerProps) {
   );
 }
 
-const dependencies = [
+Spoiler.dependencies = [
   Injected.Shell,
 ];
-Object.assign(Spoiler, {dependencies});
-type SpoilerProps = PickInjected<typeof dependencies> & {
+type SpoilerProps = PickInjected<typeof Spoiler.dependencies> & {
   name?: string,
   children: React.ReactNode
 };

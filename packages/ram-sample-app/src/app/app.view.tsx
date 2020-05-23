@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const AppView = ({Shell, sessionStore}: AppViewProps) => {
+export function AppView({Shell, sessionStore}: AppViewProps) {
   return (
     <div>
       <Shell.UserProfileView />
@@ -9,12 +9,11 @@ export const AppView = ({Shell, sessionStore}: AppViewProps) => {
       <Shell.Button onClick={() => sessionStore.logout()}>logout</Shell.Button>
     </div>
   );
-};
+}
 
-const dependencies = [
+AppView.dependencies = [
   Injected.Shell,
   Injected.userProfileStore,
   Injected.sessionStore,
 ];
-Object.assign(AppView, {dependencies});
-type AppViewProps = PickInjected<typeof dependencies>;
+type AppViewProps = PickInjected<typeof AppView.dependencies>;
