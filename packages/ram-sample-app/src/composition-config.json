@@ -3,8 +3,7 @@
     "ts-macro-definition"
   ],
   "compositionRoots": {
-    "container": {
-      "template": "<%= root %>.register({<%= registrations %>});",
+    "root": {
       "plugins": [
         ["template-emitter", {
           "configPath": "tsContext",
@@ -24,13 +23,13 @@
   "rules": {
     "ClassInstances": {
       "isAbstract": true,
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.casing": "camel",
         "naming.identifier.casing": "pascal",
-        "decorators": [
+        "decorate": [
           "asClass"
         ],
-        "modifiers": [
+        "chain": [
           "scoped"
         ],
         "jsContext": {
@@ -44,10 +43,10 @@
     },
     "Classes": {
       "isAbstract": true,
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.casing": "pascal",
         "naming.identifier.casing": "pascal",
-        "decorators": [
+        "decorate": [
           "asValue"
         ],
         "jsContext": {
@@ -62,10 +61,10 @@
     },
     "Components": {
       "ext": ".component.tsx",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.casing": "pascal",
         "naming.identifier.casing": "pascal",
-        "decorators": [
+        "decorate": [
           "withContainer",
           "asValue"
         ],
@@ -77,10 +76,10 @@
     "Views": {
       "inherit": "Components",
       "ext": ".view.tsx",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.suffix": "View",
         "naming.identifier.suffix": "View",
-        "decorators": [
+        "decorate": [
           "withContainer",
           "asValue"
         ]
@@ -89,7 +88,7 @@
     "Pages": {
       "inherit": "Views",
       "ext": ".page.tsx",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.suffix": "Page",
         "naming.identifier.suffix": "Page"
       }
@@ -97,7 +96,7 @@
     "StoreClasses": {
       "inherit": "Classes",
       "ext": ".store.ts",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.suffix": "Store",
         "naming.identifier.suffix": "Store"
       }
@@ -105,7 +104,7 @@
     "StoreInstances": {
       "inherit": "ClassInstances",
       "ext": ".store.ts",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.suffix": "Store",
         "naming.identifier.suffix": "Store"
       }
@@ -113,7 +112,7 @@
     "ServiceClasses": {
       "inherit": "Classes",
       "ext": ".service.ts",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.suffix": "Service",
         "naming.identifier.suffix": "Service"
       }
@@ -121,7 +120,7 @@
     "ServiceInstances": {
       "inherit": "ClassInstances",
       "ext": ".service.ts",
-      "registrations.container": {
+      "registrations.root": {
         "naming.registration.suffix": "Service",
         "naming.identifier.suffix": "Service"
       }

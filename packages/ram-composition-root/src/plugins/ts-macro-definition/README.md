@@ -18,9 +18,7 @@ This plugin renders the rules defined in `composition-config` into a `.d.ts` fil
     }]
   ],
   "compositionRoots": {
-    "container": {
-      "template": "<%= root %>.register({<%= registrations %>});"
-    }
+    "container": {}
   },
   "rules": {
     "Components": {
@@ -28,7 +26,7 @@ This plugin renders the rules defined in `composition-config` into a `.d.ts` fil
       "registrations.container": {
         "naming.registration.casing": "pascal",
         "naming.identifier.casing": "pascal",
-        "decorators": [
+        "decorate": [
           "withContainer",
           "asValue"
         ]

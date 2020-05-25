@@ -16,10 +16,10 @@ Each rule defines:
 * one or more `container registration` definitions
 
 Each `container registration` defines:
-* a naming convention for deriving an export name
-* a naming convention for deriving a registration name within container
+* a naming convention for deriving an export name in source file
+* a naming convention for deriving a registration name within the container
 * a list of decorators to be applied to the exported value before registration
-* a list of modifiers chained to the expression
+* a list of calls chained to the expression
 
 Autowiring is kickstarted with invoking `registerRULENAME` macro.
 
@@ -27,7 +27,7 @@ For example:
 Given `./user` directory that contains `session.store.ts` and `userProfile.store.ts` the following code will evaluate `Stores` rule and register all the stores it finds in `./user` directory with `myContainer`: 
 ```javascript
 import {createContainer, InjectionMode, asClass} from 'awilix';
-import {registerStores} from '../macros/composition-root.macro';
+import {registerStores} from '@ram-stack/composition-root/macro';
 const myContainer = createContainer({
   injectionMode: InjectionMode.PROXY,
 });
@@ -38,7 +38,6 @@ registerStores({myContainer, asClass}, './user');
            
 ```javascript
 import {createContainer, InjectionMode, asClass} from 'awilix';
-import {registerStores} from '../macros/composition-root.macro';
 const myContainer = createContainer({
   injectionMode: InjectionMode.PROXY,
 });
@@ -54,7 +53,7 @@ Composition config to produce such output might look like this:
 ```javascript
 module.exports = {
   compositionRoots: {
-    'myContainer.template': '<%= root %>.register({<%= registrations %>});',
+    myContainer: {}
   },
   rules: {
     'Stores': {
@@ -64,8 +63,8 @@ module.exports = {
         'naming.registration.suffix': 'Store',
         'naming.identifier.casing': 'pascal',
         'naming.identifier.suffix': 'Store',
-        decorators: ['asClass'],
-        modifiers: ['singleton'],
+        decorate: ['asClass'],
+        chain: ['singleton'],
       },
     },
   }
@@ -102,8 +101,8 @@ module.exports = {
       'registrations.container': {
         'naming.registration.casing': 'camel',
         'naming.identifier.casing': 'pascal',
-        decorators: ['asClass'],
-        modifiers: ['singleton'],
+        decorate: ['asClass'],
+        chain: ['singleton'],
       },
     },
     'Stores': {

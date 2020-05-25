@@ -37,7 +37,6 @@ Rule level templates are evaluated and passed to the `templateFilename` template
 {
   "compositionRoots": {
     "container": {
-      "template": "<%= root %>.register({<%= registrations %>});",
       "plugins": [
         ["template-emitter", {
           "configPath": "tsContext",
@@ -54,7 +53,7 @@ Rule level templates are evaluated and passed to the `templateFilename` template
       "registrations.container": {
         "naming.registration.casing": "pascal",
         "naming.identifier.casing": "pascal",
-        "decorators": [
+        "decorate": [
           "withContainer",
           "asValue"
         ],

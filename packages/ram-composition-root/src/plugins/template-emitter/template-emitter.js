@@ -3,6 +3,8 @@ const path = require('path');
 const _ = require('lodash');
 const os = require('os');
 
+const {formatPath, loadTemplate} = require('../../utils')
+
 module.exports = function templateEmitterPlugin(options, ruleMatches) {
   const {
     cwd,
@@ -12,9 +14,7 @@ module.exports = function templateEmitterPlugin(options, ruleMatches) {
     outputFilename,
   } = options;
 
-  const inputPath = path.join(cwd, templateFilename);
-  console.log(`[template-emitter] reading template: ${formatPath(inputPath)}`);
-  const templateFile = fs.readFileSync(inputPath, 'utf-8');
+  const templateFile = loadTemplate(cwd, 'template-emitter', templateFilename);
   const eol = getEol(templateFile);
 
   const orderedMatches = _.sortBy(ruleMatches, ['registration']);
@@ -53,10 +53,6 @@ function renderMatchTemplates(templatePath, ruleMatches) {
 function stripExtension(ext, filePath) {
   const extWithoutSuffix = '.' + ext.split('.').reverse()[0];
   return filePath.replace(new RegExp(extWithoutSuffix + '$'), '');
-}
-
-function formatPath(filePath) {
-  return './' + path.normalize(path.relative(process.cwd(), filePath)).replace(path.sep, '/');
 }
 
 function getEol(text) {

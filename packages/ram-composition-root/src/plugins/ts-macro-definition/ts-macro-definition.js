@@ -3,12 +3,14 @@ const path = require('path');
 const _ = require('lodash');
 const os = require('os');
 
+const {formatPath, loadTemplate} = require('../../utils');
+
 module.exports = function tsMacroDefinitionPlugin(options, compositionConfig) {
-  const defaultTemplate = path.join(__dirname, 'definition.ts.template');
+  const defaultTemplate = 'definition.ts.template';
   const defaultOutputFilename = 'composition-root.d.ts';
   const {
     cwd,
-    templateFilename = defaultTemplate,
+    templateFilename,
     outputFilename = defaultOutputFilename,
   } = options;
 
@@ -17,8 +19,7 @@ module.exports = function tsMacroDefinitionPlugin(options, compositionConfig) {
     _.partial(mapComposedRules, compositionConfig),
   ])({});
 
-  const templatePath = getTemplatePath(cwd, defaultTemplate, templateFilename);
-  const templateFile = fs.readFileSync(templatePath, 'utf-8');
+  const templateFile = getTemplate(cwd, defaultTemplate, templateFilename);
   const eol = getEol(templateFile);
 
   const header = [
@@ -44,7 +45,7 @@ function mapRegularRules(compositionConfig, processedRules) {
     rules[name] = {
       name,
       roots: [],
-      decorators: [],
+      decorate: [],
     };
     _.forEach(roots, root => {
       const registration = rule.registrations && rule.registrations[root];
@@ -52,7 +53,7 @@ function mapRegularRules(compositionConfig, processedRules) {
         return;
       }
       rules[name].roots.push(root);
-      rules[name].decorators = registration.decorators || [];
+      rules[name].decorate = registration.decorate || [];
     });
     return rules;
   }, processedRules);
@@ -65,24 +66,18 @@ function mapComposedRules(compositionConfig, processedRules) {
     }
     _.forEach(rule.compose, composed => {
       rules[name].roots = _.union(rules[name].roots, rules[composed].roots);
-      rules[name].decorators = _.union(rules[name].decorators, rules[composed].decorators);
+      rules[name].decorate = _.union(rules[name].decorate, rules[composed].decorate);
     });
     return rules;
   }, processedRules);
 }
 
-function getTemplatePath(cwd, defaultTemplate, templateFilename) {
-  if (templateFilename === defaultTemplate) {
+function getTemplate(cwd, defaultTemplate, templateFilename) {
+  if (!templateFilename) {
     console.log(`[ts-macro-definition] using the default template`);
-    return templateFilename;
+    return loadTemplate(__dirname, 'ts-macro-definition', defaultTemplate);
   }
-  const templatePath = path.join(cwd, templateFilename);
-  console.log(`[ts-macro-definition] reading the template: ${formatPath(templatePath)}`);
-  return templatePath;
-}
-
-function formatPath(filePath) {
-  return './' + path.normalize(path.relative(process.cwd(), filePath)).replace(path.sep, '/');
+  return loadTemplate(cwd, 'ts-macro-definition', templateFilename);
 }
 
 function getEol(text) {

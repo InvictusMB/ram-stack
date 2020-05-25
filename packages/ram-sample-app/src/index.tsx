@@ -1,20 +1,21 @@
 import type {InjectedDependencies} from '@ram-stack/context';
 import {registerModule} from '@ram-stack/composition-root/macro';
-import {asClass, asValue, createContainer} from '@ram-stack/core';
+import {asClass, asValue, createCompositionRoot} from '@ram-stack/core';
 import React from 'react';
 import {render} from 'react-dom';
 import {createInjector} from './with-container';
 
 import './style.css';
 
-const container = createContainer<InjectedDependencies>();
+const root = createCompositionRoot<InjectedDependencies>()
+const container = root.container;
 
 const withContainer = createInjector(container);
 
 registerModule({
   asClass,
   asValue,
-  container,
+  root,
   withContainer,
 }, '.');
 

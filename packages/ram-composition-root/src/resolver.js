@@ -1,9 +1,11 @@
+const path = require('path');
 const _ = require('lodash');
 
 const {processRule} = require('./rule-engine');
 const {processNamingRules} = require('./naming-rules');
 const {runPlugins} = require('./plugin-runner');
-const {renderRegistration} = require('./render-registration');
+const renderHelpers = require('./render-helpers');
+const {loadTemplate} = require('./utils');
 
 module.exports = {
   resolveContext
@@ -31,7 +33,7 @@ function resolveContext(context) {
   const roots = _.chain(ruleMatches)
     .mapValues(matches => _.map(matches, processNamingRules))
     .tap(_.partial(runPlugins, configAbsolutePath, compositionRoots))
-    .map(_.partial(renderCompositionRootRegistrations, compositionRoots))
+    .map(_.partial(renderCompositionRootRegistrations, configAbsolutePath, compositionRoots))
     .filter()
     .value();
 
@@ -46,13 +48,12 @@ function resolveContext(context) {
   }
 }
 
-function renderCompositionRootRegistrations(compositionRoots, ruleMatches, root) {
+function renderCompositionRootRegistrations(configAbsolutePath, compositionRoots, ruleMatches, root) {
   if (!ruleMatches.length) {
     return null;
   }
-  const registrations = _.map(ruleMatches, renderRegistration);
-  const template = _.template(compositionRoots[root].template);
-  return template({root, registrations});
+  const template = _.template(getTemplate(configAbsolutePath, compositionRoots[root]));
+  return template({root, ruleMatches, ...renderHelpers});
 }
 
 function removeReference(insertionNodePath) {
@@ -61,4 +62,17 @@ function removeReference(insertionNodePath) {
 
 function replaceReference(insertionNodePath, replacement) {
   insertionNodePath.replaceWithMultiple(replacement);
+}
+
+function getTemplate(configAbsolutePath, compositionRoot) {
+  const {templateFilename} = compositionRoot;
+  if (templateFilename) {
+    const cwd = path.dirname(configAbsolutePath);
+    return loadTemplate(cwd, 'composition-root-macro', templateFilename);
+  }
+  if (!compositionRoot.template) {
+    console.log(`[composition-root-macro] using the default template`);
+    return loadTemplate(__dirname, 'composition-root-macro', 'registration-template.ejs');
+  }
+  return compositionRoot.template;
 }

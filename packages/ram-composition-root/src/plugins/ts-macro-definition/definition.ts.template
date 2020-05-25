@@ -1,13 +1,21 @@
 declare module '@ram-stack/composition-root/macro' {
-<% rules.map(({name, roots, decorators}) => { %>
+<% rules.map(({name, roots, decorate}) => { %>
   export function register<%= name %>(deps: {
     <%= [].concat(
       roots.map(root => `${root}: CompositionRoot,`),
-      decorators.map(decorator => `${decorator}: DecoratorFn,`),
+      decorate.map(decorator => `${decorator}: DecoratorFn,`),
     ).join('\n    ') %>
   }, searchPath: string, configPath: string = 'composition-config.json'): void;
 <% }) %>
   type DecoratorFn = (v: any) => any;
-  type CompositionRoot = any;
+  type CompositionRoot = {
+    load(registrations: Registration[]): void,
+  };
+  type Registration = [RegistrationId, Module, FilePath, SourceId, ApplyModifiersFn];
+  type RegistrationId = string;
+  type Module = any;
+  type FilePath = string;
+  type SourceId = string;
+  type ApplyModifiersFn = (v: any) => any;
 
 }
