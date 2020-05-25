@@ -7,7 +7,7 @@ import {createInjector} from './with-container';
 
 import './style.css';
 
-const root = createCompositionRoot<InjectedDependencies>()
+const root = createCompositionRoot<InjectedDependencies>();
 const container = root.container;
 
 const withContainer = createInjector(container);
