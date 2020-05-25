@@ -7,9 +7,10 @@
     "build": "lerna run build",
     "lerna": "lerna"
   },
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": ["packages/*"],
+    "nohoist" : ["**/react-scripts", "**/patch-package"]
+  },
   "devDependencies": {
     "lerna": "^3.14.1"
   }

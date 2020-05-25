@@ -14,7 +14,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@ram-stack/composition-root": "^1.0.0",
@@ -23,7 +24,10 @@
     "@types/node": "^14.0.5",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "react-scripts": "^3.4.1",
+    "source-map-loader": "github:volune/source-map-loader#fixes",
     "typescript": "^3.9.3"
   },
   "browserslist": [

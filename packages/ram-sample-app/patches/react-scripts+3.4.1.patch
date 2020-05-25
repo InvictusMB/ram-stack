@@ -1,0 +1,43 @@
+diff --git a/node_modules/react-scripts/config/webpack.config.js b/node_modules/react-scripts/config/webpack.config.js
+index 25840d9..ae0265f 100644
+--- a/node_modules/react-scripts/config/webpack.config.js
++++ b/node_modules/react-scripts/config/webpack.config.js
+@@ -192,10 +192,13 @@ module.exports = function(webpackEnv) {
+       devtoolModuleFilenameTemplate: isEnvProduction
+         ? info =>
+             path
+-              .relative(paths.appSrc, info.absoluteResourcePath)
++              .relative(paths.appPath, info.absoluteResourcePath)
+               .replace(/\\/g, '/')
+         : isEnvDevelopment &&
+-          (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
++          (info => '../../' + path
++              .relative(paths.appPath, info.absoluteResourcePath)
++              .replace(/\\/g, '/')),
++
+       // Prevents conflicts when multiple webpack runtimes (from different apps)
+       // are used on the same page.
+       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
+@@ -361,6 +364,13 @@ module.exports = function(webpackEnv) {
+           ],
+           include: paths.appSrc,
+         },
++        // Handle node_modules packages that contain sourcemaps
++        shouldUseSourceMap && {
++          enforce: 'pre',
++          exclude: /@babel(?:\/|\\{1,2})runtime/,
++          test: /\.(js|mjs|jsx|ts|tsx|css)$/,
++          use: 'source-map-loader',
++        },
+         {
+           // "oneOf" will traverse all following loaders until one will
+           // match the requirements. When no loader matches it will fall
+@@ -555,7 +565,7 @@ module.exports = function(webpackEnv) {
+             // Make sure to add the new loader(s) before the "file" loader.
+           ],
+         },
+-      ],
++      ].filter(Boolean),
+     },
+     plugins: [
+       // Generates an `index.html` file with the <script> injected.
