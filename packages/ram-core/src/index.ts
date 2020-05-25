@@ -5,3 +5,5 @@ export {task} from 'mobx-task';
 
 export {createCompositionRoot} from './composition-root';
 export type {Container} from './composition-root';
+
+import 'mobx-react-lite/batchingForReactDom';
