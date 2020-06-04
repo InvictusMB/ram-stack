@@ -5,6 +5,7 @@
   "compositionRoots": {
     "root": {
       "plugins": [
+        "babel-emitter",
         ["template-emitter", {
           "configPath": "tsContext",
           "placeholders": ["top", "shell", "injectedId", "classes"],

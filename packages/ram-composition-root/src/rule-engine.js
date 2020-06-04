@@ -6,7 +6,7 @@ module.exports = {
   processRule
 };
 
-function processRule(rule, context) {
+function processRule(context, rule) {
   const {rules, cwd, rootPath} = context;
   if (rule.compose) {
     const composed = _.map(rule.compose, ref => {
@@ -14,7 +14,7 @@ function processRule(rule, context) {
       if (!composedRule) {
         throw new Error(`Definition for rule ${ref} not found`);
       }
-      return processRule(composedRule, context);
+      return processRule(context, composedRule);
     });
     return _.mergeWith({}, ...composed, (dest, src) => {
       if (_.isArray(dest)) {

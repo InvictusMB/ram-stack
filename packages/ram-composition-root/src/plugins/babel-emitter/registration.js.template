@@ -1,0 +1,5 @@
+<%= root %>.load([
+<% ruleMatches.map(({identifier, registration, filePath, rule}) => { %>
+  ['<%= registration %>', require('./<%= filePath %>'), '<%= filePath %>', '<%= identifier %>', v => <%= applyModifiers(rule, 'v') %>],
+<% }) %>
+]);

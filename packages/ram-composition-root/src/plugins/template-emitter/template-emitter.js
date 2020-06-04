@@ -5,7 +5,8 @@ const os = require('os');
 
 const {formatPath, loadTemplate} = require('../../utils')
 
-module.exports = function templateEmitterPlugin(options, ruleMatches) {
+module.exports = function templateEmitterPlugin(options, context) {
+  const {ruleMatches} = context;
   const {
     cwd,
     configPath,

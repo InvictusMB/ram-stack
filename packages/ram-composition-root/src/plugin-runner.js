@@ -2,35 +2,43 @@ const path = require('path');
 const _ = require('lodash');
 
 module.exports = {
-  runPlugins,
+  runCompositionRootPlugins,
   runGlobalPlugins,
 };
 
-function runPlugins(configAbsolutePath, compositionRoots, ruleMatches) {
-  const defaultOptions = {
-    cwd: path.dirname(configAbsolutePath),
-  };
+function runCompositionRootPlugins(context) {
+  const {compositionRoots, ruleMatches} = context;
 
-  _.forEach(compositionRoots, (root, rootName) => {
+  return _.flatMap(compositionRoots, (rootDefinition, rootName) => {
     const rootMatches = ruleMatches[rootName] || [];
-    const plugins = _.map(root.plugins, normalizeDefinition);
-    _.forEach(plugins, pluginDefinition => {
-      const [name, pluginOptions] = pluginDefinition;
-      const options = computeOptions(defaultOptions, pluginOptions);
-      requirePlugin(name)(options, rootMatches);
+
+    const pluginContext = Object.create(context);
+    Object.assign(pluginContext, {
+      rootName,
+      rootDefinition,
+      ruleMatches: rootMatches,
     });
+
+    const {plugins} = rootDefinition;
+    return runPlugins(pluginContext, plugins);
   });
 }
 
-function runGlobalPlugins(configAbsolutePath, compositionConfig) {
+function runGlobalPlugins(context) {
+  const {plugins} = context;
+  return runPlugins(context, plugins);
+}
+
+function runPlugins(context, plugins) {
+  const {configAbsolutePath} = context;
   const defaultOptions = {
     cwd: path.dirname(configAbsolutePath),
   };
-  const plugins = _.map(compositionConfig.plugins, normalizeDefinition);
-  _.forEach(plugins, pluginDefinition => {
+  const normalizedPlugins = _.map(plugins, normalizeDefinition);
+  return _.map(normalizedPlugins, pluginDefinition => {
     const [name, pluginOptions] = pluginDefinition;
     const options = computeOptions(defaultOptions, pluginOptions);
-    requirePlugin(name)(options, compositionConfig);
+    return requirePlugin(name)(options, context);
   });
 }
 

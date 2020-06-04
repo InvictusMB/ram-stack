@@ -3,7 +3,6 @@ const path = require('path');
 const {createMacro} = require('babel-plugin-macros');
 
 const {loadConfig} = require('./config-loader');
-const {runGlobalPlugins} = require('./plugin-runner');
 const {resolveContext} = require('./resolver');
 
 module.exports = createMacro(macro);
@@ -19,14 +18,14 @@ function macro({references, state, babel}) {
       .map(({referencePath, configPath, rootPath}) => {
         const configAbsolutePath = path.resolve(cwd, configPath);
         const compositionConfig = loadConfig(configAbsolutePath);
-        runGlobalPlugins(configAbsolutePath, compositionConfig);
-        const {rules, compositionRoots} = compositionConfig;
+        const {plugins, rules, compositionRoots} = compositionConfig;
         return {
           filename,
           referencedRule,
           cwd,
           configAbsolutePath,
           rootPath,
+          plugins,
           rules,
           compositionRoots,
           babel,

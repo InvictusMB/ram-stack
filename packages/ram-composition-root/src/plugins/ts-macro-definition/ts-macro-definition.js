@@ -5,7 +5,7 @@ const os = require('os');
 
 const {formatPath, loadTemplate} = require('../../utils');
 
-module.exports = function tsMacroDefinitionPlugin(options, compositionConfig) {
+module.exports = function tsMacroDefinitionPlugin(options, context) {
   const defaultTemplate = 'definition.ts.template';
   const defaultOutputFilename = 'composition-root.d.ts';
   const {
@@ -15,8 +15,8 @@ module.exports = function tsMacroDefinitionPlugin(options, compositionConfig) {
   } = options;
 
   const rules = _.flow([
-    _.partial(mapRegularRules, compositionConfig),
-    _.partial(mapComposedRules, compositionConfig),
+    _.partial(mapRegularRules, context),
+    _.partial(mapComposedRules, context),
   ])({});
 
   const templateFile = getTemplate(cwd, defaultTemplate, templateFilename);
@@ -38,10 +38,10 @@ module.exports = function tsMacroDefinitionPlugin(options, compositionConfig) {
   console.log(`[ts-macro-definition] writing the output: ${formatPath(outputPath)}`);
 };
 
-function mapRegularRules(compositionConfig, processedRules) {
-  const roots = Object.keys(compositionConfig.compositionRoots);
+function mapRegularRules(context, processedRules) {
+  const roots = Object.keys(context.compositionRoots);
 
-  return Object.entries(compositionConfig.rules).reduce((rules, [name, rule]) => {
+  return Object.entries(context.rules).reduce((rules, [name, rule]) => {
     rules[name] = {
       name,
       roots: [],
@@ -59,8 +59,8 @@ function mapRegularRules(compositionConfig, processedRules) {
   }, processedRules);
 }
 
-function mapComposedRules(compositionConfig, processedRules) {
-  return Object.entries(compositionConfig.rules).reduce((rules, [name, rule]) => {
+function mapComposedRules(context, processedRules) {
+  return Object.entries(context.rules).reduce((rules, [name, rule]) => {
     if (!rule.compose) {
       return rules;
     }
