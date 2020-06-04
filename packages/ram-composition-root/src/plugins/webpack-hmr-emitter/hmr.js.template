@@ -1,0 +1,19 @@
+if (module.hot) {
+<% const uniqueFiles = _.uniq(_.map('filePath', ruleMatches)) %>
+  module.hot.accept([<% uniqueFiles.map(f => { %>'./<%= f %>', <% }) %>], (updated = []) => {
+    const updatedMap = Object.fromEntries(updated.map(f => [f, true]));
+    const registrations = [];
+    <% ruleMatches.map(({identifier, registration, filePath, rule}) => { %>
+    if (updatedMap['./<%= basePath %>/<%= filePath %>']) {
+      registrations.push([
+        '<%= registration %>', require('./<%= filePath %>'),
+        './<%= basePath %>/<%= filePath %>',
+        '<%= identifier %>',
+        v => <%= applyModifiers(rule, 'v') %>
+      ]);
+    }
+    <% }) %>
+    console.log('[HMR] Updating', updated);
+    <%= root %>.reload(registrations);
+  });
+}

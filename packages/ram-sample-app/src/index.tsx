@@ -7,7 +7,9 @@ import {createInjector} from './with-container';
 
 import './style.css';
 
-const root = createCompositionRoot<InjectedDependencies>();
+const root = createCompositionRoot<InjectedDependencies>({
+  onReady: renderApp,
+});
 const container = root.container;
 
 const withContainer = createInjector(container);
@@ -19,18 +21,19 @@ registerModule({
   withContainer,
 }, '.');
 
-const Shell = container.resolve('Shell');
+function renderApp() {
+  const Shell = container.resolve('Shell');
 
-render((
-  <div>
-    <Shell.CreateScope>
-      <h2>App 1</h2>
-      <Shell.AppView />
-    </Shell.CreateScope>
-    <Shell.CreateScope>
-      <h2>App 2</h2>
-      <Shell.AppView />
-    </Shell.CreateScope>
-  </div>
-), document.getElementById('root'));
-
+  render((
+    <div>
+      <div>
+        <h2>App 1</h2>
+        <Shell.AppView />
+      </div>
+      <Shell.CreateScope>
+        <h2>App 2</h2>
+        <Shell.AppView />
+      </Shell.CreateScope>
+    </div>
+  ), document.getElementById('root'));
+}

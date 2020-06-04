@@ -10,6 +10,7 @@ declare module '@ram-stack/composition-root/macro' {
   type DecoratorFn = (v: any) => any;
   type CompositionRoot = {
     load(registrations: Registration[]): void,
+    reload(registrations: Registration[]): void,
   };
   type Registration = [RegistrationId, Module, FilePath, SourceId, ApplyModifiersFn];
   type RegistrationId = string;

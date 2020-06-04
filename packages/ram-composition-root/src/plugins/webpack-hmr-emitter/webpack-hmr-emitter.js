@@ -1,9 +1,9 @@
 const _ = require('lodash/fp');
 
 const {resolvePluginTemplate} = require('../../utils');
-const renderHelpers = require('./render-helpers');
+const renderHelpers = require('../babel-emitter/render-helpers');
 
-module.exports = function babelEmitterPlugin(options, context) {
+module.exports = function hmrEmitterPlugin(options, context) {
   const {rootName, ruleMatches, basePath} = context;
 
   if (!ruleMatches.length) {
@@ -12,8 +12,8 @@ module.exports = function babelEmitterPlugin(options, context) {
   const template = _.template(resolvePluginTemplate({
     options,
     compositionRootName: rootName,
-    pluginName: `babel-emitter`,
-    defaultTemplateFilename: 'registration.js.template',
+    pluginName: 'webpack-hmr-emitter',
+    defaultTemplateFilename: 'hmr.js.template',
     dirname: __dirname,
   }));
   return template({root: rootName, ruleMatches, basePath, ...renderHelpers});

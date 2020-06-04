@@ -10,6 +10,7 @@ module.exports = createMacro(macro);
 function macro({references, state, babel}) {
   const {file: {opts: {filename}}} = state;
   const cwd = path.dirname(filename);
+  const basePath = path.relative(process.cwd(), cwd);
 
   _.forEach(references, (reference, referenceName) => {
     const referencedRule = referenceName.replace('register', '');
@@ -23,6 +24,7 @@ function macro({references, state, babel}) {
           filename,
           referencedRule,
           cwd,
+          basePath,
           configAbsolutePath,
           rootPath,
           plugins,

@@ -6,6 +6,7 @@
     "root": {
       "plugins": [
         "babel-emitter",
+        "webpack-hmr-emitter",
         ["template-emitter", {
           "configPath": "tsContext",
           "placeholders": ["top", "shell", "injectedId", "classes"],
