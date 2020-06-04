@@ -5,6 +5,8 @@
   "scripts": {
     "test": "lerna run test",
     "build": "lerna run build",
+    "prestart": "npm run build",
+    "start": "lerna run --scope @ram-stack/sample-app start",
     "lerna": "lerna"
   },
   "workspaces": {
