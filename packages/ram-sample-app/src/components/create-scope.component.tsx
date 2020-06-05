@@ -1,8 +1,8 @@
-import React from 'react';
+import {hooks} from '@ram-stack/core';
 
 export function CreateScope({ContainerContext, children}: BranchStateProps) {
-  const shell = React.useContext(ContainerContext);
-  const [childScope] = React.useState(shell.createScope());
+  const shell = hooks.useContext(ContainerContext);
+  const [childScope] = hooks.useState(shell.createScope());
   return (
     <ContainerContext.Provider value={childScope}>
       {children}

@@ -1,12 +1,11 @@
-import {asValue, asFunction, useObserver} from '@ram-stack/core';
+import {asValue, asFunction, useObserver, view, hooks} from '@ram-stack/core';
 import hoistStatics from 'hoist-non-react-statics';
-import React from 'react';
 
 import './ram-context';
 
 export function createInjector(container) {
   const shell = createShell(container);
-  const ContainerContext = React.createContext(shell);
+  const ContainerContext = view.createContext(shell);
   container.register({
     Shell: asValue(shell.cradle),
     ContainerContext: asValue(ContainerContext),
@@ -23,7 +22,7 @@ export function withContainer(ContainerContext, component) {
   );
 
   function Injector(props) {
-    const container = React.useContext(ContainerContext);
+    const container = hooks.useContext(ContainerContext);
     const deps = resolveDependencies(container, component);
 
     const newProps = {

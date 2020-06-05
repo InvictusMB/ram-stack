@@ -1,8 +1,6 @@
 import type {InjectedDependencies} from '@ram-stack/context';
 import {registerModule} from '@ram-stack/composition-root/macro';
-import {asClass, asValue, createCompositionRoot} from '@ram-stack/core';
-import React from 'react';
-import {render} from 'react-dom';
+import {asClass, asValue, createCompositionRoot, view} from '@ram-stack/core';
 import {createInjector} from './with-container';
 
 import './style.css';
@@ -24,7 +22,7 @@ registerModule({
 function renderApp() {
   const Shell = container.resolve('Shell');
 
-  render((
+  view.renderDom((
     <div>
       <div>
         <h2>App 1</h2>

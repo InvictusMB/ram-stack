@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function UserProfileView(props: UserProfileViewProps) {
   const {Shell, userProfileStore} = props;
   const error = userProfileStore.load.error as Error;

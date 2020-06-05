@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function AppView({Shell, sessionStore}: AppViewProps) {
   return (
     <div>

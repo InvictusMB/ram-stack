@@ -1,7 +1,7 @@
-import React from 'react';
+import {hooks, React} from '@ram-stack/core';
 
 export function Spoiler({Shell, name, children}: SpoilerProps) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = hooks.useState(false);
   return (
     <div>
       <div>

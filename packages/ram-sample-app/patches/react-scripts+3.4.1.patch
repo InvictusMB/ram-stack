@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-scripts/config/webpack.config.js b/node_modules/react-scripts/config/webpack.config.js
-index 25840d9..ae0265f 100644
+index 25840d9..f6eeeb1 100644
 --- a/node_modules/react-scripts/config/webpack.config.js
 +++ b/node_modules/react-scripts/config/webpack.config.js
 @@ -192,10 +192,13 @@ module.exports = function(webpackEnv) {
@@ -32,7 +32,22 @@ index 25840d9..ae0265f 100644
          {
            // "oneOf" will traverse all following loaders until one will
            // match the requirements. When no loader matches it will fall
-@@ -555,7 +565,7 @@ module.exports = function(webpackEnv) {
+@@ -420,6 +430,14 @@ module.exports = function(webpackEnv) {
+                       },
+                     },
+                   ],
++                  [
++                    "@babel/plugin-transform-react-jsx",
++                    {
++                      "throwIfNamespace": true,
++                      "runtime": "automatic",
++                      "importSource": "@ram-stack/core",
++                    }
++                  ],
+                 ],
+                 // This is a feature of `babel-loader` for webpack (not Babel itself).
+                 // It enables caching results in ./node_modules/.cache/babel-loader/
+@@ -555,7 +573,7 @@ module.exports = function(webpackEnv) {
              // Make sure to add the new loader(s) before the "file" loader.
            ],
          },

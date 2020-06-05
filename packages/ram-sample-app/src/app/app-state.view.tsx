@@ -1,5 +1,4 @@
 import {toJS} from '@ram-stack/core';
-import React from 'react';
 
 export function AppStateView({Shell, appStore}: AppStateViewProps) {
   return (
