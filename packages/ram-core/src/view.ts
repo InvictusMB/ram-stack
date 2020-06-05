@@ -3,9 +3,9 @@ export {
   createElement,
   cloneElement,
   createContext,
-} from 'react';
+} from 'preact/compat';
 
 export {
   render as renderDom,
-} from 'react-dom';
+} from 'preact/compat';
 

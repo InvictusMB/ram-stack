@@ -1,17 +1,6 @@
-import {createElement} from 'react';
+export {
+  h as jsx,
+  h as jsxs,
+  Fragment,
+} from 'preact';
 
-export {Fragment} from 'react';
-
-export function jsx(type, props = {}) {
-  const {children, ...rest} = props;
-  if (children) {
-    if (Array.isArray(children)) {
-      return createElement(type, rest, ...children);
-    } else {
-      return createElement(type, rest, children);
-    }
-  }
-  return createElement(type, props);
-}
-
-export const jsxs = jsx;

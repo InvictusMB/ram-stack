@@ -9,4 +9,4 @@ export {
   useImperativeHandle,
   useLayoutEffect,
   useDebugValue,
-} from 'react';
+} from 'preact/compat';

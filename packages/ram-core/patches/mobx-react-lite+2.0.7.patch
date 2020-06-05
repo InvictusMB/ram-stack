@@ -1,0 +1,11 @@
+diff --git a/node_modules/mobx-react-lite/dist/mobxreactlite.esm.js b/node_modules/mobx-react-lite/dist/mobxreactlite.esm.js
+index 408e43b..f5051b8 100644
+--- a/node_modules/mobx-react-lite/dist/mobxreactlite.esm.js
++++ b/node_modules/mobx-react-lite/dist/mobxreactlite.esm.js
+@@ -1,5 +1,5 @@
+ import { spy, configure, getDependencyTree, Reaction, observable, runInAction, transaction } from 'mobx';
+-import React, { useState, useCallback, memo, forwardRef } from 'react';
++import React, { useState, useCallback, memo, forwardRef } from 'preact/compat';
+ 
+ if (!useState) {
+   throw new Error("mobx-react-lite requires React with Hooks support");

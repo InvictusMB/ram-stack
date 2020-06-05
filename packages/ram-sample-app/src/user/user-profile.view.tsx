@@ -4,7 +4,7 @@ export function UserProfileView(props: UserProfileViewProps) {
   return (
     <div>
       {userProfileStore.isFetching && <Shell.ProgressIndicator />}
-      {!userProfileStore.isFetching && <h3>Hello {getName(userProfileStore)}!</h3>}
+      {!userProfileStore.isFetching && <h3>Helloss {getName(userProfileStore)}!</h3>}
       {error && (
         <div>
           <b>Error:</b> <i>{error.message}!</i>
