@@ -5,6 +5,9 @@
   "compositionRoots": {
     "root": {
       "plugins": [
+        ["babel-emitter", {
+          "templateFilename": "./ram-context.js.template"
+        }],
         "babel-emitter",
         "webpack-hmr-emitter",
         ["template-emitter", {
@@ -12,12 +15,6 @@
           "placeholders": ["top", "shell", "injectedId", "classes"],
           "templateFilename": "./ram-context.d.ts.template",
           "outputFilename": "./ram-context.d.ts"
-        }],
-        ["template-emitter", {
-          "configPath": "jsContext",
-          "placeholders": ["injectedId"],
-          "templateFilename": "./ram-context.js.template",
-          "outputFilename": "./ram-context.js"
         }]
       ]
     },

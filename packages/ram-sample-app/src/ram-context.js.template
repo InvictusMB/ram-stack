@@ -1,5 +1,7 @@
 const Injected = {
-<%= injectedId.map(v => '  ' + v ).join(',\n') %><%= injectedId.length ? ',' : '  // to be generated...' %>
+<% ruleMatches.map(({registration}) => { %>
+  <%= registration %>: '<%= registration %>',
+<% }) %>
   Shell: 'Shell',
   ContainerContext: 'ContainerContext',
   routerRoot: 'routerRoot',

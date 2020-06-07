@@ -2,7 +2,6 @@ import type {InjectedDependencies} from '@ram-stack/context';
 import {registerModule} from '@ram-stack/composition-root/macro';
 import {createCompositionRoot, createRouterRoot, di, view} from '@ram-stack/core';
 
-import './ram-context';
 import './style.css';
 
 const {asClass, asValue} = di;
