@@ -67,11 +67,11 @@
         "naming.registration.casing": "pascal",
         "naming.identifier.casing": "pascal",
         "decorate": [
-          "withContainer",
+          "withInjected",
           "asValue"
         ],
         "tsContext": {
-          "template.shell": "<%= registration %>: WrappedComponent<typeof import('./<%= filePath %>').<%= identifier %>>"
+          "template.shell": "<%= registration %>: WithInjected<InjectedDependencies, typeof import('./<%= filePath %>').<%= identifier %>>"
         }
       }
     },
@@ -80,11 +80,7 @@
       "ext": ".view.tsx",
       "registrations.root": {
         "naming.registration.suffix": "View",
-        "naming.identifier.suffix": "View",
-        "decorate": [
-          "withContainer",
-          "asValue"
-        ]
+        "naming.identifier.suffix": "View"
       }
     },
     "Pages": {

@@ -26,9 +26,11 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "@types/hoist-non-react-statics": "^3.3.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "awilix": "^4.2.6",
+    "hoist-non-react-statics": "^3.3.2",
     "mobx": "^5.15.4",
     "mobx-react-lite": "^2.0.7",
     "mobx-task": "^2.0.1",

@@ -1,26 +1,25 @@
 import type {InjectedDependencies} from '@ram-stack/context';
 import {registerModule} from '@ram-stack/composition-root/macro';
-import {asClass, asValue, createCompositionRoot, view} from '@ram-stack/core';
-import {createInjector} from './with-container';
+import {createCompositionRoot, di, view} from '@ram-stack/core';
 
+import './ram-context';
 import './style.css';
 
+const {asClass, asValue} = di;
 const root = createCompositionRoot<InjectedDependencies>({
   onReady: renderApp,
 });
-const container = root.container;
-
-const withContainer = createInjector(container);
+const withInjected = root.withInjected;
 
 registerModule({
   asClass,
   asValue,
   root,
-  withContainer,
+  withInjected,
 }, '.');
 
 function renderApp() {
-  const Shell = container.resolve('Shell');
+  const Shell = root.container.resolve('Shell');
 
   view.renderDom((
     <div>

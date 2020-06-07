@@ -1,13 +1,9 @@
-export {asClass, asValue, asFunction} from 'awilix';
-export * from 'mobx';
-export * from 'mobx-react-lite';
-export {task} from 'mobx-task';
+export * from './observable';
+export * as di from './di';
 
-export {createCompositionRoot} from './composition-root';
-export type {Container} from './composition-root';
+export * from './composition-root';
+export * from './with-injected.types';
 
 export type {default as React} from 'react';
 export * as hooks from './hooks';
 export * as view from './view';
-
-import 'mobx-react-lite/batchingForReactDom';

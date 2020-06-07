@@ -5,21 +5,28 @@ import {
   ResolveOptions,
 } from 'awilix';
 
+import {createInjector} from './with-injected';
+import type {WithInjected} from './with-injected.types';
+
 export function createCompositionRoot<T extends object>(options: Partial<CompositionRootOptions>) {
   const container = createContainer<T>();
   const {
-    onReady = () => {}
+    onReady = () => {
+    },
   } = options;
   return new CompositionRoot<T>(container, {
     onReady,
   });
 }
 
-class CompositionRoot<T extends object> {
+class CompositionRoot<Injected extends object> {
   bindingIndex: {[key: string]: string} = {};
   consolePrefix = `[@ram/core/composition-root]`;
+  withInjected: Wrapper<Injected>;
 
-  constructor(public container: Container<T>, public options: CompositionRootOptions) {}
+  constructor(public container: Container<Injected>, public options: CompositionRootOptions) {
+    this.withInjected = createInjector(container) as Wrapper<Injected>;
+  }
 
   load(registrations: Registration[], validate = true) {
     const mapped = registrations.map(r => {
@@ -90,3 +97,5 @@ type Module = any;
 type FilePath = any;
 type SourceId = string;
 type ApplyModifiersFn = (v: any) => any
+
+type Wrapper<Injected> = <Component>(component: Component) => WithInjected<Injected, Component>;

@@ -1,7 +1,9 @@
-import {asValue, asFunction, useObserver, view, hooks} from '@ram-stack/core';
 import hoistStatics from 'hoist-non-react-statics';
 
-import './ram-context';
+import {asFunction, asValue} from './di';
+import * as hooks from './hooks';
+import {useObserver} from './observable';
+import * as view from './view';
 
 export function createInjector(container) {
   const shell = createShell(container);
@@ -10,10 +12,10 @@ export function createInjector(container) {
     Shell: asValue(shell.cradle),
     ContainerContext: asValue(ContainerContext),
   });
-  return component => withContainer(ContainerContext, component);
+  return component => withInjected(ContainerContext, component);
 }
 
-export function withContainer(ContainerContext, component) {
+function withInjected(ContainerContext, component) {
   const componentName = (
     component.displayName
     || component.name
@@ -34,7 +36,7 @@ export function withContainer(ContainerContext, component) {
   }
 
   Object.assign(Injector, {
-    displayName: `${componentName}-with-container`,
+    displayName: `${componentName}-with-injected`,
     wrappedComponent: component,
   });
 
