@@ -10,3 +10,9 @@ export {
   useLayoutEffect,
   useDebugValue,
 } from 'react';
+
+export {
+  useRouteMatch,
+  useParams,
+  useHistory,
+} from 'react-router-dom';
