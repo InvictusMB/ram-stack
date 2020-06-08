@@ -1,8 +1,29 @@
-import {router} from '@ram-stack/core';
+import {hooks, router} from '@ram-stack/core';
 
 export function HomePage({Shell}: HomePageProps) {
+  const [redirect, setRedirect] = hooks.useState(false);
+  const redirectTimeout = 5000;
+
+  hooks.useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setRedirect(true);
+    }, redirectTimeout);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  });
+
+  if (redirect) {
+    return (
+      <router.Redirect to={Shell.UserGreetingPage.route} />
+    );
+  }
   return (
-    <router.Redirect to={Shell.UserGreetingPage.route} />
+    <h3>
+      This page will redirect in 5 seconds
+      <Shell.LoadingDots />
+    </h3>
   );
 }
 

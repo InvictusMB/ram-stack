@@ -53,6 +53,8 @@ declare module '@ram-stack/context' {
     Button: WithInjected<InjectedDependencies, typeof import('./components/button.component').Button>,
     CreateScope: WithInjected<InjectedDependencies, typeof import('./components/create-scope.component').CreateScope>,
     HomePage: WithInjected<InjectedDependencies, typeof import('./app/home.page').HomePage> & Page,
+    LoadingDots: WithInjected<InjectedDependencies, typeof import('./components/loading-dots.component').LoadingDots>,
+    NavigationView: WithInjected<InjectedDependencies, typeof import('./app/navigation.view').NavigationView>,
     ProgressIndicator: WithInjected<InjectedDependencies, typeof import('./components/progress-indicator.component').ProgressIndicator>,
     RouterView: WithInjected<InjectedDependencies, typeof import('./app/router.view').RouterView>,
     Spoiler: WithInjected<InjectedDependencies, typeof import('./components/spoiler.component').Spoiler>,

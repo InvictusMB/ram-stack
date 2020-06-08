@@ -3,6 +3,7 @@ import {router} from '@ram-stack/core';
 export function RouterView({Shell, routerRoot}: PickInjected<typeof RouterView.dependencies>) {
   return (
     <router.BrowserRouter>
+      <Shell.NavigationView />
       <router.Switch>
         {Object.entries(routerRoot.routeConfig)
           .map(([path, id]) => {
