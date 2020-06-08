@@ -2,6 +2,7 @@ const Injected = {
 <%= injectedId.map(v => '  ' + v ).join(',\n') %><%= injectedId.length ? ',' : '  // to be generated...' %>
   Shell: 'Shell',
   ContainerContext: 'ContainerContext',
+  routerRoot: 'routerRoot',
 };
 
 window.Injected = Injected;

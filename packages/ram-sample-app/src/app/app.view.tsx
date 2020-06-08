@@ -1,7 +1,7 @@
 export function AppView({Shell, sessionStore}: AppViewProps) {
   return (
     <div>
-      <Shell.UserProfileView />
+      <Shell.RouterView />
       <Shell.AppStateView />
       <Shell.Button onClick={() => sessionStore.login({name: 'World'})}>login</Shell.Button>
       <Shell.Button onClick={() => sessionStore.logout()}>logout</Shell.Button>

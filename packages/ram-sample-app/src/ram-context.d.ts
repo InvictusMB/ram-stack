@@ -14,6 +14,7 @@ namespace Injected {
   export const userProfileStore = 'userProfileStore' as const;
   export const Shell = 'Shell' as const;
   export const ContainerContext = 'ContainerContext' as const;
+  export const routerRoot = 'routerRoot' as const;
 
   namespace classes {
     export * from '@ram-stack/context/classes';
@@ -28,7 +29,7 @@ declare module '@ram-stack/context/classes' {
 }
 
 declare module '@ram-stack/context' {
-  import type {React, WithInjected} from '@ram-stack/core';
+  import type {React, WithInjected, RouterRoot} from '@ram-stack/core';
 
   type PickInjected<K extends (keyof InjectedDependencies)[]> = Pick<InjectedDependencies, K[number]>
 
@@ -43,6 +44,7 @@ declare module '@ram-stack/context' {
     userProfileStore: import('./user/user-profile.store').UserProfileStore,
     Shell: Shell,
     ContainerContext: React.Context<import('@ram-stack/core').Container<InjectedDependencies>>,
+    routerRoot: RouterRoot,
   };
 
   type Shell = {
@@ -50,8 +52,16 @@ declare module '@ram-stack/context' {
     AppView: WithInjected<InjectedDependencies, typeof import('./app/app.view').AppView>,
     Button: WithInjected<InjectedDependencies, typeof import('./components/button.component').Button>,
     CreateScope: WithInjected<InjectedDependencies, typeof import('./components/create-scope.component').CreateScope>,
+    HomePage: WithInjected<InjectedDependencies, typeof import('./app/home.page').HomePage> & Page,
     ProgressIndicator: WithInjected<InjectedDependencies, typeof import('./components/progress-indicator.component').ProgressIndicator>,
+    RouterView: WithInjected<InjectedDependencies, typeof import('./app/router.view').RouterView>,
     Spoiler: WithInjected<InjectedDependencies, typeof import('./components/spoiler.component').Spoiler>,
-    UserProfileView: WithInjected<InjectedDependencies, typeof import('./user/user-profile.view').UserProfileView>,
+    UserGreetingPage: WithInjected<InjectedDependencies, typeof import('./user/user-greeting.page').UserGreetingPage> & Page,
+    UserGreetingView: WithInjected<InjectedDependencies, typeof import('./user/user-greeting.view').UserGreetingView>,
+    UserProfilePage: WithInjected<InjectedDependencies, typeof import('./user/user-profile.page').UserProfilePage> & Page,
+  };
+
+  type Page = {
+    route: string,
   };
 }

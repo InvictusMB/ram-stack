@@ -1,4 +1,4 @@
-export function UserProfileView(props: UserProfileViewProps) {
+export function UserGreetingView(props: UserGreetingViewProps) {
   const {Shell, userProfileStore} = props;
   const error = userProfileStore.load.error as Error;
   return (
@@ -17,11 +17,11 @@ export function UserProfileView(props: UserProfileViewProps) {
   );
 }
 
-UserProfileView.dependencies = [
+UserGreetingView.dependencies = [
   Injected.Shell,
   Injected.userProfileStore,
 ];
-type UserProfileViewProps = PickInjected<typeof UserProfileView.dependencies>;
+type UserGreetingViewProps = PickInjected<typeof UserGreetingView.dependencies>;
 
 function getName(store: Injected.classes.UserProfileStore) {
   if (store.load.error) {

@@ -4,6 +4,7 @@ namespace Injected {
 <%= injectedId.map(v => '  ' + v ).join(';\n') %><%= injectedId.length ? ';' : '    // to be generated...' %>
   export const Shell = 'Shell' as const;
   export const ContainerContext = 'ContainerContext' as const;
+  export const routerRoot = 'routerRoot' as const;
 
   namespace classes {
     export * from '@ram-stack/context/classes';
@@ -15,7 +16,7 @@ declare module '@ram-stack/context/classes' {
 }
 
 declare module '@ram-stack/context' {
-  import type {React, WithInjected} from '@ram-stack/core';
+  import type {React, WithInjected, RouterRoot} from '@ram-stack/core';
 
   type PickInjected<K extends (keyof InjectedDependencies)[]> = Pick<InjectedDependencies, K[number]>
 
@@ -23,9 +24,14 @@ declare module '@ram-stack/context' {
 <%= top.map(v => '    ' + v).join(',\n') %><%= top.length ? ',' : '    // to be generated...' %>
     Shell: Shell,
     ContainerContext: React.Context<import('@ram-stack/core').Container<InjectedDependencies>>,
+    routerRoot: RouterRoot,
   };
 
   type Shell = {
 <%= shell.map(v => '    ' + v).join(',\n') %><%= shell.length ? ',' : '    // to be generated...' %>
+  };
+
+  type Page = {
+    route: string,
   };
 }

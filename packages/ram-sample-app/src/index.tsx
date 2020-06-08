@@ -1,6 +1,6 @@
 import type {InjectedDependencies} from '@ram-stack/context';
 import {registerModule} from '@ram-stack/composition-root/macro';
-import {createCompositionRoot, di, view} from '@ram-stack/core';
+import {createCompositionRoot, createRouterRoot, di, view} from '@ram-stack/core';
 
 import './ram-context';
 import './style.css';
@@ -11,11 +11,17 @@ const root = createCompositionRoot<InjectedDependencies>({
 });
 const withInjected = root.withInjected;
 
+const router = createRouterRoot();
+root.container.register({
+  routerRoot: asValue(router),
+});
+
 registerModule({
   asClass,
   asValue,
   root,
   withInjected,
+  router,
 }, '.');
 
 function renderApp() {

@@ -20,6 +20,11 @@
           "outputFilename": "./ram-context.js"
         }]
       ]
+    },
+    "router": {
+      "plugins": [
+        "babel-emitter"
+      ]
     }
   },
   "rules": {
@@ -87,6 +92,13 @@
       "inherit": "Views",
       "ext": ".page.tsx",
       "registrations.root": {
+        "naming.registration.suffix": "Page",
+        "naming.identifier.suffix": "Page",
+        "tsContext": {
+          "template.shell": "<%= registration %>: WithInjected<InjectedDependencies, typeof import('./<%= filePath %>').<%= identifier %>> & Page"
+        }
+      },
+      "registrations.router": {
         "naming.registration.suffix": "Page",
         "naming.identifier.suffix": "Page"
       }
