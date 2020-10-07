@@ -16,12 +16,12 @@ function macro({references, state, babel}) {
     const referencedRule = referenceName.replace('register', '');
     reference
       .map(parseMacroParameters)
-      .map(({referencePath, configPath, rootPath}) => {
+      .forEach(({referencePath, configPath, rootPath}) => {
         const configAbsolutePath = path.resolve(cwd, configPath);
         const compositionConfig = loadConfig(configAbsolutePath);
         const {plugins, rules, compositionRoots} = compositionConfig;
-        return {
-          filename,
+        const macroName = referenceName;
+        const context = {
           referencedRule,
           cwd,
           basePath,
@@ -30,11 +30,18 @@ function macro({references, state, babel}) {
           plugins,
           rules,
           compositionRoots,
-          babel,
-          insertionNodePath: getInsertionPath(referencePath),
+          macroName,
+        };
+        const insertionNodePath = getInsertionPath(referencePath);
+        const output = resolveContext(context) || '';
+        if (output.length) {
+          const replacement = babel.template(output)();
+          replaceReference(insertionNodePath, replacement);
+        } else {
+          console.warn(`No files matched "${macroName}" macro in ${filename}`);
+          removeReference(insertionNodePath);
         }
-      })
-      .forEach(resolveContext);
+      });
   });
 }
 
@@ -60,4 +67,12 @@ function getReferences(objectExpression) {
   return _.fromPairs(
     _.map(objectExpression.node.properties, property => [property.key.name, property.value.name]),
   );
+}
+
+function removeReference(insertionNodePath) {
+  insertionNodePath.remove();
+}
+
+function replaceReference(insertionNodePath, replacement) {
+  insertionNodePath.replaceWithMultiple(replacement);
 }

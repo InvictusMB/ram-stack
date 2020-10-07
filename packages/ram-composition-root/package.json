@@ -3,6 +3,9 @@
   "version": "1.0.1",
   "description": "Babel macro to define application composition root",
   "main": "./dist",
+  "bin": {
+    "composition-root": "./dist/bin/cli.js"
+  },
   "files": [
     "dist",
     "macro.js",
@@ -15,7 +18,8 @@
   },
   "dependencies": {
     "dot-object": "^1.7.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.5"
   },
   "devDependencies": {
     "babel-plugin-macros": "^2.4.5",

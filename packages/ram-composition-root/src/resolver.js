@@ -14,19 +14,17 @@ module.exports = {
 function resolveContext(context) {
   const {
     referencedRule,
-    babel,
     configAbsolutePath,
-    insertionNodePath,
     rules,
-    filename
+    macroName,
   } = context;
 
   const globalOutput = runGlobalPlugins(context);
 
   const rule = rules[referencedRule];
   if (!rule) {
-    console.warn(`No rule defined for register${referencedRule} macro in ${configAbsolutePath}`);
-    return removeReference(insertionNodePath);
+    console.warn(`No rule defined for "${macroName}" macro in ${configAbsolutePath}`);
+    return '';
   }
 
   const ruleMatches = getRuleMatches(context, rule);
@@ -40,13 +38,9 @@ function resolveContext(context) {
   ).filter(Boolean);
 
   if (!output.length) {
-    console.warn(`No files matched register${referencedRule} macro in ${filename}`);
-    removeReference(insertionNodePath);
+    return '';
   } else {
-    const replacement = babel.template(
-      output.join('\n'),
-    )();
-    replaceReference(insertionNodePath, replacement);
+    return output.join('\n');
   }
 }
 
@@ -55,12 +49,4 @@ function getRuleMatches(context, rule) {
     processRule,
     _.mapValues(_.map(processNamingRules)),
   ])(context, rule);
-}
-
-function removeReference(insertionNodePath) {
-  insertionNodePath.remove();
-}
-
-function replaceReference(insertionNodePath, replacement) {
-  insertionNodePath.replaceWithMultiple(replacement);
 }
