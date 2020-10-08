@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/sample-app@0.1.0...@ram-stack/sample-app@0.2.0) (2020-10-08)
+
+
+### Features
+
+* **composition-root:** Add watch CLI command ([0a61627](https://github.com/InvictusMB/ram-stack/commit/0a6162742050b93ce44a7c8c0ef6b2e3ffc48c5c))
+
+
+
+
+
 # 0.1.0 (2020-10-08)
 
 

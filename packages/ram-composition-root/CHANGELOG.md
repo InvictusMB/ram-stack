@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/composition-root@1.1.0...@ram-stack/composition-root@1.2.0) (2020-10-08)
+
+
+### Features
+
+* **composition-root:** Add watch CLI command ([0a61627](https://github.com/InvictusMB/ram-stack/commit/0a6162742050b93ce44a7c8c0ef6b2e3ffc48c5c))
+
+
+
+
+
 # [1.1.0](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/composition-root@1.0.0...@ram-stack/composition-root@1.1.0) (2020-10-08)
 
 
