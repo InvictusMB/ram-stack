@@ -1,9 +1,14 @@
 {
   "name": "@ram-stack/core",
   "version": "1.0.0",
-  "private": true,
-  "description": "React Awilix MobX app core dependencies",
+  "description": "React Awilix MobX app core dependencies and utilities",
   "main": "./dist",
+  "files": [
+    "dist",
+    "jsx-runtime.js",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "build": "tsc"
@@ -21,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/InvictusMB/ram-stack/issues"
   },
-  "homepage": "https://github.com/InvictusMB/ram-stack/packages/ram-core#readme",
+  "homepage": "https://github.com/InvictusMB/ram-stack/tree/master/packages/ram-core/README.md",
   "devDependencies": {
     "typescript": "^3.9.3"
   },
