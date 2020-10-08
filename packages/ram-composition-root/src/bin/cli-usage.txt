@@ -1,0 +1,11 @@
+Usage: composition-root <command> [options]
+
+Commands:
+
+  build                           Build composition root
+  watch                           Watch for new files
+
+Options:
+
+  -h, --help                      Display this usage info.
+  -v, --version                   Display the composition-root version.
