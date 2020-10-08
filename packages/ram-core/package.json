@@ -1,6 +1,6 @@
 {
   "name": "@ram-stack/core",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React Awilix MobX app core dependencies and utilities",
   "main": "./dist",
   "files": [
