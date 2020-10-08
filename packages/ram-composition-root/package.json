@@ -18,6 +18,7 @@
     "build": "cpr ./src ./dist -d"
   },
   "dependencies": {
+    "chokidar": "^3.4.2",
     "dot-object": "^1.7.1",
     "lodash": "^4.17.15",
     "minimist": "^1.2.5"

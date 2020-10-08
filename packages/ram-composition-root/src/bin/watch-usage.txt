@@ -1,0 +1,5 @@
+Usage: composition-root watch <search-root> <file> [options]
+
+  Watches <search-root> and updates target <file> timestamps whenever source files are added or deleted. This forces Babel to rerun macros within target <file>.
+
+  -h, --help                      Display this usage info.
