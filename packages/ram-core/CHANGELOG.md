@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/core@1.1.0...@ram-stack/core@1.1.1) (2020-10-08)
+
+
+### Bug Fixes
+
+* **core:** Reexport MemoryRouter ([392101f](https://github.com/InvictusMB/ram-stack/commit/392101fd4fc27407f85a1d7e5ef31117f3d78e6b))
+
+
+
+
+
 # 1.1.0 (2020-10-08)
 
 
