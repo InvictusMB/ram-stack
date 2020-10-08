@@ -1,5 +1,6 @@
 export {
   BrowserRouter,
+  MemoryRouter,
   Switch,
   Route,
   Link,
