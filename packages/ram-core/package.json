@@ -5,6 +5,7 @@
   "main": "./dist",
   "files": [
     "dist",
+    "src",
     "jsx-runtime.js",
     "LICENSE",
     "README.md"
