@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/core@1.1.3...@ram-stack/core@1.1.4) (2020-10-09)
+
+
+### Bug Fixes
+
+* **core:** Convert jsx runtime to CommonJS ([74dbad7](https://github.com/InvictusMB/ram-stack/commit/74dbad78e06e747a16fce93df830aa62c6e6b7c9))
+* **core:** Reexport React memo ([93d463e](https://github.com/InvictusMB/ram-stack/commit/93d463e5dde1ee9e0fa04fe60dd1b0147ecea9dc))
+
+
+
+
+
+
 ## [1.1.1](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/core@1.1.0...@ram-stack/core@1.1.1) (2020-10-08)
 
 
