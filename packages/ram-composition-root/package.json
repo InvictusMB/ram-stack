@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "build": "cpr ./src ./dist -d"
+    "build": "cpr ./src ./dist -d",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "chokidar": "^3.4.2",

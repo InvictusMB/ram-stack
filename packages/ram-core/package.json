@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",

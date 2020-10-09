@@ -7,7 +7,8 @@
     "build": "lerna run build",
     "prestart": "npm run build",
     "start": "lerna run --scope @ram-stack/sample-app start",
-    "lerna": "lerna"
+    "lerna": "lerna",
+    "postinstall": "npm run build"
   },
   "workspaces": {
     "packages": ["packages/*"],
