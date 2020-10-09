@@ -3,6 +3,7 @@ export {
   createElement,
   cloneElement,
   createContext,
+  memo,
 } from 'react';
 
 export {
