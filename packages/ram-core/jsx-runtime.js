@@ -1,8 +1,12 @@
-import {createElement} from 'react';
+const {createElement, Fragment} = require('react');
 
-export {Fragment} from 'react';
+module.exports = {
+  Fragment,
+  jsx,
+  jsxs: jsx,
+}
 
-export function jsx(type, props = {}) {
+function jsx(type, props = {}) {
   const {children, ...rest} = props;
   if (children) {
     if (Array.isArray(children)) {
@@ -13,5 +17,3 @@ export function jsx(type, props = {}) {
   }
   return createElement(type, props);
 }
-
-export const jsxs = jsx;
