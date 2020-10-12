@@ -30,7 +30,7 @@
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.2.2",
     "postinstall-postinstall": "^2.1.0",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "3.4.3",
     "source-map-loader": "github:volune/source-map-loader#fixes",
     "typescript": "^3.9.3"
   },
