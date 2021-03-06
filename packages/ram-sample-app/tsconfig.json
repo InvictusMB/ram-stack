@@ -23,7 +23,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "strict": false
+    "strict": false,
+    "noFallthroughCasesInSwitch": true
   },
   "exclude": [
     "node_modules",

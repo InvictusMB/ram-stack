@@ -21,18 +21,18 @@
   },
   "devDependencies": {
     "@ram-stack/composition-root": "^1.2.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^25.2.3",
     "@types/lodash": "^4.14.152",
     "@types/node": "^14.0.5",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.2.2",
     "postinstall-postinstall": "^2.1.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "^4.0.1",
     "source-map-loader": "github:volune/source-map-loader#fixes",
-    "typescript": "^3.9.3"
+    "typescript": "^4.2.3"
   },
   "browserslist": [
     ">0.2%",

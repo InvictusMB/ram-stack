@@ -1,19 +1,19 @@
 diff --git a/node_modules/react-scripts/config/jest/babelTransform.js b/node_modules/react-scripts/config/jest/babelTransform.js
-index 7feed94..86eac0b 100644
+index c583015..45ecbd0 100644
 --- a/node_modules/react-scripts/config/jest/babelTransform.js
 +++ b/node_modules/react-scripts/config/jest/babelTransform.js
-@@ -12,5 +12,5 @@ const babelJest = require('babel-jest');
- module.exports = babelJest.createTransformer({
-   presets: [require.resolve('babel-preset-react-app')],
+@@ -33,5 +33,5 @@ module.exports = babelJest.createTransformer({
+     ],
+   ],
    babelrc: false,
 -  configFile: false,
 +  configFile: true,
  });
 diff --git a/node_modules/react-scripts/config/webpack.config.js b/node_modules/react-scripts/config/webpack.config.js
-index 25840d9..f6eeeb1 100644
+index 26c2a65..4ac2088 100644
 --- a/node_modules/react-scripts/config/webpack.config.js
 +++ b/node_modules/react-scripts/config/webpack.config.js
-@@ -192,10 +192,13 @@ module.exports = function(webpackEnv) {
+@@ -228,10 +228,12 @@ module.exports = function (webpackEnv) {
        devtoolModuleFilenameTemplate: isEnvProduction
          ? info =>
              path
@@ -25,14 +25,13 @@ index 25840d9..f6eeeb1 100644
 +          (info => '../../' + path
 +              .relative(paths.appPath, info.absoluteResourcePath)
 +              .replace(/\\/g, '/')),
-+
        // Prevents conflicts when multiple webpack runtimes (from different apps)
        // are used on the same page.
        jsonpFunction: `webpackJsonp${appPackageJson.name}`,
-@@ -361,6 +364,13 @@ module.exports = function(webpackEnv) {
-           ],
-           include: paths.appSrc,
-         },
+@@ -372,6 +374,13 @@ module.exports = function (webpackEnv) {
+       rules: [
+         // Disable require.ensure as it's not a standard language feature.
+         { parser: { requireEnsure: false } },
 +        // Handle node_modules packages that contain sourcemaps
 +        shouldUseSourceMap && {
 +          enforce: 'pre',
@@ -43,22 +42,22 @@ index 25840d9..f6eeeb1 100644
          {
            // "oneOf" will traverse all following loaders until one will
            // match the requirements. When no loader matches it will fall
-@@ -420,6 +430,14 @@ module.exports = function(webpackEnv) {
-                       },
-                     },
-                   ],
+@@ -452,6 +461,14 @@ module.exports = function (webpackEnv) {
+                   isEnvDevelopment &&
+                     shouldUseReactRefresh &&
+                     require.resolve('react-refresh/babel'),
 +                  [
-+                    "@babel/plugin-transform-react-jsx",
++                    '@babel/plugin-transform-react-jsx',
 +                    {
-+                      "throwIfNamespace": true,
-+                      "runtime": "automatic",
-+                      "importSource": "@ram-stack/core",
-+                    }
++                      'throwIfNamespace': true,
++                      'runtime': 'automatic',
++                      'importSource': '@ram-stack/core',
++                    },
 +                  ],
-                 ],
+                 ].filter(Boolean),
                  // This is a feature of `babel-loader` for webpack (not Babel itself).
                  // It enables caching results in ./node_modules/.cache/babel-loader/
-@@ -555,7 +573,7 @@ module.exports = function(webpackEnv) {
+@@ -595,7 +612,7 @@ module.exports = function (webpackEnv) {
              // Make sure to add the new loader(s) before the "file" loader.
            ],
          },
@@ -67,3 +66,25 @@ index 25840d9..f6eeeb1 100644
      },
      plugins: [
        // Generates an `index.html` file with the <script> injected.
+diff --git a/node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js b/node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
+index 949f34a..c05d423 100644
+--- a/node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
++++ b/node_modules/react-scripts/scripts/utils/verifyTypeScriptSetup.js
+@@ -145,17 +145,6 @@ function verifyTypeScriptSetup() {
+     resolveJsonModule: { value: true, reason: 'to match webpack loader' },
+     isolatedModules: { value: true, reason: 'implementation limitation' },
+     noEmit: { value: true },
+-    jsx: {
+-      parsedValue:
+-        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+-          ? ts.JsxEmit.ReactJSX
+-          : ts.JsxEmit.React,
+-      value:
+-        hasJsxRuntime && semver.gte(ts.version, '4.1.0-beta')
+-          ? 'react-jsx'
+-          : 'react',
+-      reason: 'to support the new JSX transform in React 17',
+-    },
+     paths: { value: undefined, reason: 'aliased imports are not supported' },
+   };
+
