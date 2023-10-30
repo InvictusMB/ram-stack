@@ -8,10 +8,10 @@ export function NavigationView({Shell, routerRoot}: PickInjected<typeof Navigati
         .map(([path, id]) => {
           return ([path, Shell[id as keyof typeof Shell]]);
         })
-        .map(([path, Component]) => {
+        .map(([path, Component], i) => {
           const route = (Component as Page).route;
           return (
-            <router.Link to={route.replace(/:\w+/g, '1')}>
+            <router.Link key={i} to={route.replace(/:\w+/g, '1')}>
               <span>[{route}]</span>
             </router.Link>
           );

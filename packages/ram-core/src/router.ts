@@ -1,8 +1,8 @@
 export {
   BrowserRouter,
   MemoryRouter,
-  Switch,
+  Routes,
   Route,
   Link,
-  Redirect,
+  Navigate,
 } from 'react-router-dom';

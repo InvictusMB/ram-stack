@@ -12,7 +12,7 @@ export {
 } from 'react';
 
 export {
-  useRouteMatch,
+  useMatch,
   useParams,
-  useHistory,
+  useNavigate,
 } from 'react-router-dom';

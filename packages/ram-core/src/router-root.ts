@@ -61,16 +61,6 @@ export class RouterRoot {
 
 }
 
-function mapEntries<T, U extends keyof T, V>(o: T, fn: mapperFn<T, U, V>) {
-  return Object.fromEntries(
-    Object.entries(o)
-      .map(fn),
-  );
-}
-
-type mapperFn<T, U extends keyof T, V> = (pair: [string, T[U]]) => [U, V];
-
-
 type RouteMap = {[componentId: string]: string};
 type ComponentMap = {[route: string]: ComponentWithRoute};
 type ComponentWithRoute = {route: string};

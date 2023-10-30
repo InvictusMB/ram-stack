@@ -16,7 +16,7 @@ export function HomePage({Shell}: HomePageProps) {
 
   if (redirect) {
     return (
-      <router.Redirect to={Shell.UserGreetingPage.route} />
+      <router.Navigate to={Shell.UserGreetingPage.route} />
     );
   }
   return (

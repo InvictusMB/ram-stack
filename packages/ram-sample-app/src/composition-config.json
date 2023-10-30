@@ -3,6 +3,11 @@
     "ts-macro-definition"
   ],
   "compositionRoots": {
+    "router": {
+      "plugins": [
+        "babel-emitter"
+      ]
+    },
     "root": {
       "plugins": [
         "babel-emitter",
@@ -19,11 +24,6 @@
           "templateFilename": "./ram-context.js.template",
           "outputFilename": "./ram-context.js"
         }]
-      ]
-    },
-    "router": {
-      "plugins": [
-        "babel-emitter"
       ]
     }
   },

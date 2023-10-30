@@ -1,10 +1,10 @@
-import {router} from '@ram-stack/core';
+import {router, view} from '@ram-stack/core';
 
 export function RouterView({Shell, routerRoot}: PickInjected<typeof RouterView.dependencies>) {
   return (
     <router.BrowserRouter>
       <Shell.NavigationView />
-      <router.Switch>
+      <router.Routes>
         {Object.entries(routerRoot.routeConfig)
           .map(([path, id]) => {
             return ([path, Shell[id as keyof typeof Shell]]);
@@ -14,10 +14,10 @@ export function RouterView({Shell, routerRoot}: PickInjected<typeof RouterView.d
               key: path as string,
               path: path as string,
               exact: true,
-              render: (props: any) => <Component {...props} />,
+              element: view.createElement(Component as any),
             }} />
           ))}
-      </router.Switch>
+      </router.Routes>
     </router.BrowserRouter>
   );
 }

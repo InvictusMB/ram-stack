@@ -8,13 +8,13 @@
     "prestart": "npm run build",
     "start": "lerna run --scope @ram-stack/sample-app start",
     "lerna": "lerna",
-    "postinstall": "npm run build"
+    "postinstall": "lerna run postinstall && npm run build"
   },
   "workspaces": {
     "packages": ["packages/*"],
     "nohoist" : ["**/react-scripts", "**/patch-package"]
   },
   "devDependencies": {
-    "lerna": "^3.14.1"
+    "lerna": "^7.4.2"
   }
 }

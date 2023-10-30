@@ -7,7 +7,7 @@
     "version": {
       "allowBranch": "master",
       "conventionalCommits": true,
-      "githubRelease": true,
+      "createRelease":"github",
       "message": "chore(release): Publish"
     }
   }

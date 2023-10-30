@@ -6,6 +6,8 @@ import './ram-context';
 import './style.css';
 
 const {asClass, asValue} = di;
+
+const renderRoot = view.createRoot(document.getElementById('root'));
 const root = createCompositionRoot<InjectedDependencies>({
   onReady: renderApp,
 });
@@ -27,7 +29,7 @@ registerModule({
 function renderApp() {
   const Shell = root.container.resolve('Shell');
 
-  view.renderDom((
+  renderRoot.render(
     <div>
       <div>
         <h2>App 1</h2>
@@ -38,5 +40,5 @@ function renderApp() {
         <Shell.AppView />
       </Shell.CreateScope>
     </div>
-  ), document.getElementById('root'));
+  );
 }

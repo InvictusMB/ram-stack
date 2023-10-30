@@ -2,7 +2,7 @@ import hoistStatics from 'hoist-non-react-statics';
 
 import {asFunction, asValue} from './di';
 import * as hooks from './hooks';
-import {useObserver} from './observable';
+import {observer} from './observable';
 import * as view from './view';
 
 export function createInjector(container) {
@@ -27,12 +27,13 @@ function withInjected(ContainerContext, component) {
     const container = hooks.useContext(ContainerContext);
     const deps = resolveDependencies(container, component);
 
+    const {children, ...rest} = props;
     const newProps = {
       ...deps,
-      ...props,
+      ...rest,
     };
 
-    return useObserver(() => component(newProps));
+    return view.createElement(observer(component), newProps, children);
   }
 
   Object.assign(Injector, {
