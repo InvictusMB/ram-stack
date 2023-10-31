@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/core@2.0.0...@ram-stack/core@3.0.0) (2023-10-31)
+
+**Note:** Version bump only for package @ram-stack/core
+
+
+
+
+
 ## [1.1.4](https://github.com/InvictusMB/ram-stack/compare/@ram-stack/core@1.1.3...@ram-stack/core@1.1.4) (2020-10-09)
 
 

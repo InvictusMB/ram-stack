@@ -1,6 +1,6 @@
 {
   "name": "@ram-stack/composition-root",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "Babel macro to define application composition root",
   "main": "./dist",
   "bin": {
