@@ -4,7 +4,7 @@
   "private": true,
   "author": "InvictusMB <invictusmb@gmail.com>",
   "dependencies": {
-    "@ram-stack/core": "^2.0.0",
+    "@ram-stack/core": "^3.0.0",
     "lodash": "^4.17.15"
   },
   "scripts": {
@@ -20,7 +20,7 @@
     "postinstall": "patch-package"
   },
   "devDependencies": {
-    "@ram-stack/composition-root": "^1.2.0",
+    "@ram-stack/composition-root": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
